@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel = "stylesheet" href = "css_files/style.css" />
+    
+</head>
+<script src = "js_files/app.js"></script>
+<body>
+    <nav class="navbar">
+        <div class="navbar__container">
+            <a href="/" id="navbar__logo">ISKOOL</a>
+            <div class="navbar__toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="navbar__menu">
+                
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">My Ads</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">Bookings</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links">Messages</a>
+                </li>
+                <li class="navbar__btn">
+                    <a href="/" class="navbar__links"><img src = "images/bell.png" id = "bell" alt = "Notifications">Notifications</a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/" class="navbar__links"><img src = "images/person.jpg" id = "person"></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class = "quirkytagline">
+        <h2 id = "tagline">Quirky Tagline</h2>
+    </div>
+    <div class = "menubar">
+        
+
+        <ul class = "menubar__container">
+            <li class = "menubar__item">Campus
+                <div class = "menubar__toggle" id = "campus">
+                    <span class = "bar"></span>
+                    <span class = "bar"></span>
+                    <span class = "bar"></span>
+                </div>
+            </li>
+            <li class = "menubar__item">College
+                <div class = "menubar__toggle" id = "campus">
+                    <span class = "bar"></span>
+                    <span class = "bar"></span>
+                    <span class = "bar"></span>
+                </div>
+            </li>
+            <li class = "menubar__item">Price
+                <div class = "menubar__toggle" id = "campus">
+                    <span class = "bar"></span>
+                    <span class = "bar"></span>
+                    <span class = "bar"></span>
+                </div>
+            </li>
+
+            
+        </ul>
+        <ul class = "sort">
+            <li class = "sort__item"><input type = "text" id = "search" value = "Search"></li>
+            <li class = "sort__item"><div class = "dropdown">Sort By:<button class = "dropbtn" onclick="sortbyClick()">Newest</button>
+                
+                <div class = "dropdown-content" id = "dropdownContainer">
+                    <a href = "#">Newest</a>
+                    <a href = "#">Lowest Price</a>
+                    <a href = "#">Highest Rating</a>
+                </div>
+            </div></li>
+        </ul>
+        
+    </div>
+
+    
+</body>
+</script>
+</html>
