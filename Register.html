@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css_files/registerStyle.css">
+    <title>Iskool: Sign Up</title>
+  </head>
+  <body>
+    <h1>ISKOOL</h1>
 
+    <form> 
+      <div class="register">
+        <input type="text" id="fname" placeholder="First Name" required>
+        <input type="text" id="lname" placeholder="Last Name" required> <br>
+
+        <input type="email" id="email" placeholder="Email Address" required> <br>
+    
+        <select id="campus" required>
+          <option value="" disabled selected hidden>Campus</option>
+          <option value="upd">UP Diliman</option>
+          <option value="uplb">UP Los Baños</option>
+          <option value="upm">UP Manila</option>
+          <option value="upv">UP Visayas</option>
+          <option value="upou">UP Open University</option>
+          <option value="upmin">UP Mindanao</option>
+          <option value="upb">UP Baguio</option>
+          <option value="upc">UP Cebu</option>
+        </select>
+        <input type="text" id="course" placeholder="Course" required> <br>
+
+        <select id="year" required>
+          <option value="" disabled selected hidden>Year Standing</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+          <option value="5">5th Year and Above</option>
+        </select> <br>
+
+        <label for="birthday" class="label">Birthday:</label>
+        <input type="date" id="birthday" required> <br> <br>
+
+        <input type="password" id="password" placeholder="Password" required> <br>
+        <input type="password" id="password" placeholder="Confirm Password" required> <br> <br> <br> <br>
+
+        <button type="submit">Sign Up</button> <br> <br>
+
+        <h5> Already have an account? <a href="Login.html"> Sign in</a>. </h5>
+      </div>
+    </form>
+  </body>
+</html>
