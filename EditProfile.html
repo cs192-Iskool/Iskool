@@ -1,1 +1,85 @@
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Name of user - Iskool</title>
+        <link rel="stylesheet" href="css_files/AccountProfile.css">
+        <script defer src="js_files/AccountProfile.js"></script>
+    </head>
+    <body>
+        <div class="top">
+            <div class="home">
+                <div>
+                    <a href="index.html">Iskool</a>
+                </div>
+            </div>
+            <div class="navigate">
+                <div>My Ads</div>
+                <div>Bookings</div>
+                <div>Messages</div>
+                <div>(notif)</div>
+                <div style="padding: 0px;" id="dropdown">
+                    <div style="padding: 5px 5px 5px 10px;">Name</div>
+                    <div style="padding: 5px 10px 5px 5px">
+                        <img class="corner_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
+                    </div>
+                </div>
+            </div>
+            <div id="dropdown_popup">
+                <div>
+                    <a href="AccountProfile.html">Profile</a>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
+                <div>
+                    <a href="Login.html">Log Out</a>
+                </div>
+            </div>
+            <div id="dropdown_overlay"></div>
+        </div>
+        <div class="horizontal"></div>
+        <div class="prof_pic">
+            <img class="main_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
+        </div>
+        <div class="horizontal"></div>
+        <div class="main">
+            <div class="sidebar">
+                <ul style="margin: 0px; border: 0px; padding-left: 20%;">
+                    <li>Edit Profile</li>
+                </ul>
+            </div>
+            <div class="vertical" style="float: left;"></div>
+            <div class="info_box">
+                <div class="all_info">
+                    <h1>Basic Info</h1>
+                    <ul>
+                        <li>Name:</li>
+                        <li>Birthday:</li>
+                        <li>Campus:</li>
+                        <li>Course:</li>
+                        <li>Year Standing:</li>
+                    </ul>
+                </div>
+                <div style="height: 50px;"></div>
+                <div class="all_info">
+                    <h1>Account Details</h1>
+                    <ul>
+                        <li>Email Address:</li>
+                        <li>New Password:</li>
+                        <li>Confirm Password:</li>
+                    </ul>
+                </div>
+                <div style="height: 50px;"></div>
+                <div class="all_info" style="border-color: white;">
+                    <a href="AccountProfile.html">
+                        <button>Confirm</button>
+                    </a>
+                    <a href="AccountProfile.html">
+                        <button style="float: right;  margin-right: 30px;">Cancel</button>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>
