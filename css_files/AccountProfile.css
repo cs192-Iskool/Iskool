@@ -4,88 +4,8 @@ body {
     padding: 0px;
 }
 
-ul {
-    list-style-type: none;
-}
-
-li {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
 td {
     padding: 0px 10px 25px 50px;
-}
-
-.top {
-    background-color: #94051c;
-    height: 60px;
-    display: block;
-}
-
-.home {
-    padding-left: 30px;
-    height: 60px;
-    width: 10%;
-    float: left;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-}
-
-.navigate {
-    height: 60px;
-    float: right;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-}
-
-.navigate div {
-    padding-right: 30px;
-}
-
-#dropdown {
-    margin-right: 30px;
-    border-radius: 50px;
-    background-color: #700819;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-}
-
-#dropdown_popup {
-    background-color: #f1f1f1;
-    padding: 15px;
-    width: 95px;
-    position: absolute;
-    top: 62px;
-    left: 90%;
-    transform: scale(0);
-    display: flex;
-    flex-direction: column;
-    z-index: 1;
-}
-
-#dropdown_popup.active {
-    transform: scale(1);
-}
-
-#dropdown_overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    pointer-events: none;
-}
-
-#dropdown_overlay.active {
-    pointer-events: all;
-}
-
-.horizontal {
-    border-top: 3px solid black;
 }
 
 .vertical {
@@ -96,20 +16,33 @@ td {
 .prof_pic {
     padding-left: 15%;
     height: 175px;
-}
-
-.corner_prof_pic {
-    border-radius: 50%;
-    height: 40px;
-    position: relative;
-    bottom: -2px;
+    z-index: 1;
 }
 
 .main_prof_pic {
+    padding: 0px;
+    border: 0px;
     border-radius: 50%;
     height: 200px;
     position: relative;
     bottom: -70px;
+}
+
+.change_prof_pic {
+    display: none;
+    padding: 10px;
+    background-color: #f1f1f1;
+    width: 150px;
+    position: relative;
+    left: 170px;
+}
+
+.change_prof_pic:hover {
+    background-color: #aaaaaa;
+}
+
+.popup {
+    display: block;
 }
 
 .main {
@@ -119,6 +52,24 @@ td {
 .sidebar {
     padding-top: 20px;
     width: 10%;
+}
+
+.sidebar_navigate {
+    width: 50%;
+    left: 50%;
+    position: relative;
+    transform: translate(-50%);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar_navigate div {
+    padding: 10px;
+}
+
+.sidebar_navigate a {
+    text-decoration: none;
+    color: black;
 }
 
 .info_box {
