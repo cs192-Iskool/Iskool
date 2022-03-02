@@ -2,7 +2,7 @@
 function sortbyClick(){
     document.getElementById("dropdownContainer").classList.toggle("show");
 }
-
+/*
 window.onclick = function(event){
     if(!event.target.matches('.dropbtn')){
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -14,4 +14,4 @@ window.onclick = function(event){
             }
         }
     }
-}
+}*/

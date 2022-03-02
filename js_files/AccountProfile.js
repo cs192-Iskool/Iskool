@@ -1,20 +1,9 @@
-// For clicking on upper-right corner
+// for changing profile picture
+function change_prof_pic(){
+    document.getElementById("prof_pic_dropdown").classList.toggle("popup");
+}
 
-const dropdown = document.getElementById("dropdown")
-const dropdown_overlay = document.getElementById("dropdown_overlay")
-const dropdown_popup = document.getElementById("dropdown_popup")
-
-dropdown.addEventListener("click", () => {
-    dropdown_overlay.classList.add("active")
-    dropdown_popup.classList.add("active")
-})
-
-dropdown_overlay.addEventListener("click", () => {
-    dropdown_overlay.classList.remove("active")
-    dropdown_popup.classList.remove("active")
-})
-
-// For deleting account
+// for delete button
 
 const delete_button = document.getElementById("open_delete_message")
 const delete_overlay = document.getElementById("delete_overlay")
