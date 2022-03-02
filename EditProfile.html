@@ -60,23 +60,55 @@
                     <table>
                         <tr>
                             <td>Name:</td>
-                            <td></td>
+                            <td>
+                                <span>
+                                    <input type="text" placeholder="First Name" required>
+                                </span>
+                                <span>
+                                    <input type="text" placeholder="Last Name" required>
+                                </span>
+                            </td>
                         </tr>
                         <tr>
                             <td>Birthday:</td>
-                            <td></td>
+                            <td>
+                                <input type="date" id="birthday" required>
+                            </td>
                         </tr>
                         <tr>
                             <td>Campus:</td>
-                            <td></td>
+                            <td>
+                                <select required>
+                                    <option value="" disabled selected hidden>Campus</option>
+                                    <option value="upd">UP Diliman</option>
+                                    <option value="uplb">UP Los Baños</option>
+                                    <option value="upm">UP Manila</option>
+                                    <option value="upv">UP Visayas</option>
+                                    <option value="upou">UP Open University</option>
+                                    <option value="upmin">UP Mindanao</option>
+                                    <option value="upb">UP Baguio</option>
+                                    <option value="upc">UP Cebu</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td>Course:</td>
-                            <td></td>
+                            <td>
+                                <input type="text" placeholder="Course" required>
+                            </td>
                         </tr>
                         <tr>
                             <td>Year Standing:</td>
-                            <td></td>
+                            <td>
+                                <select required>
+                                    <option value="" disabled selected hidden>Year Standing</option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                    <option value="4">4th Year</option>
+                                    <option value="5">5th Year and Above</option>
+                                </select>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -86,15 +118,21 @@
                     <table>
                         <tr>
                             <td>Email Address:</td>
-                            <td></td>
+                            <td>
+                                <input type="email" placeholder="Email Address" required>
+                            </td>
                         </tr>
                         <tr>
                             <td>New Password:</td>
-                            <td></td>
+                            <td>
+                                <input type="password" placeholder="Password" required>
+                            </td>
                         </tr>
                         <tr>
                             <td>Confirm Password:</td>
-                            <td></td>
+                            <td>
+                                <input type="password" placeholder="Confirm Password" required>
+                            </td>
                         </tr>
                     </table>
                 </div>
