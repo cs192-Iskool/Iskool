@@ -5,28 +5,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Name of user - Iskool</title>
         <link rel="stylesheet" href="css_files/AccountProfile.css">
+        <link rel="stylesheet" href="css_files/header.css">
         <script defer src="js_files/AccountProfile.js"></script>
+        <script defer src="js_files/header.js"></script>
     </head>
     <body>
         <div class="top">
             <div class="home">
-                <div>
-                    <a href="index.html">Iskool</a>
-                </div>
+                <button class="header_links">
+                    <a href="HomePage.html">Iskool</a>
+                </button>
             </div>
-            <div class="navigate">
-                <div>My Ads</div>
-                <div>Bookings</div>
-                <div>Messages</div>
-                <div>(notif)</div>
-                <div style="padding: 0px;" id="dropdown">
-                    <div style="padding: 5px 5px 5px 10px;">Name</div>
-                    <div style="padding: 5px 10px 5px 5px">
-                        <img class="corner_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
-                    </div>
-                </div>
+            <div class="header_navigate">
+                <button class="header_links">My Ads</button>
+                <button class="header_links">Bookings</button>
+                <button class="header_links">Messages</button>
+                <button class="header_links">(notif)</button>
+                <button class="header_links" id="dropdown" onclick="show_dropdown()">Name
+                    <img class="corner_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
+                </button>
             </div>
-            <div id="dropdown_popup">
+            <div class="dropdown_popup" id="dropdown_elements">
                 <div>
                     <a href="AccountProfile.html">Profile</a>
                 </div>
@@ -35,39 +34,69 @@
                     <a href="Login.html">Log Out</a>
                 </div>
             </div>
-            <div id="dropdown_overlay"></div>
         </div>
         <div class="horizontal"></div>
         <div class="prof_pic">
-            <img class="main_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
+            <button class="main_prof_pic" id="prof_pic_display" onclick="change_prof_pic()">
+                <img style="height: 200px; border-radius: 50%;" src="images/profpic.jpg" alt="User's current profile picture.">
+            </button>
+            <div class="change_prof_pic" id="prof_pic_dropdown">
+                Change profile picture
+            </div>
         </div>
         <div class="horizontal"></div>
         <div class="main">
             <div class="sidebar">
-                <ul style="margin: 0px; border: 0px; padding-left: 20%;">
-                    <li>Edit Profile</li>
-                </ul>
+                <div class="sidebar_navigate" style="width: 70%;">
+                    <div style="text-align: center;">
+                        <a href="EditProfile.html">Edit Profile</a>
+                    </div>
+                </div>
             </div>
             <div class="vertical" style="float: left;"></div>
             <div class="info_box">
                 <div class="all_info">
                     <h1>Basic Info</h1>
-                    <ul>
-                        <li>Name:</li>
-                        <li>Birthday:</li>
-                        <li>Campus:</li>
-                        <li>Course:</li>
-                        <li>Year Standing:</li>
-                    </ul>
+                    <table>
+                        <tr>
+                            <td>Name:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Birthday:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Campus:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Course:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Year Standing:</td>
+                            <td></td>
+                        </tr>
+                    </table>
                 </div>
                 <div style="height: 50px;"></div>
                 <div class="all_info">
                     <h1>Account Details</h1>
-                    <ul>
-                        <li>Email Address:</li>
-                        <li>New Password:</li>
-                        <li>Confirm Password:</li>
-                    </ul>
+                    <table>
+                        <tr>
+                            <td>Email Address:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>New Password:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Confirm Password:</td>
+                            <td></td>
+                        </tr>
+                    </table>
                 </div>
                 <div style="height: 50px;"></div>
                 <div class="all_info" style="border-color: white;">
