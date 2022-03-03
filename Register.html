@@ -5,44 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css_files/Register.css">
     <title>Iskool: Sign Up</title>
+    <script defer src="js_files/Register.js"></script>
   </head>
   <body>
     <h1>ISKOOL</h1>
 
-    <form> 
+    <form action="php_db_files/Register.php" onsubmit="return validate()" method="POST"> 
       <div class="register">
-        <input type="text" id="fname" placeholder="First Name" required>
-        <input type="text" id="lname" placeholder="Last Name" required> <br>
+        <input type="text" name="fname" id="fname" placeholder="First Name" required>
+        <input type="text" name="lname" id="lname" placeholder="Last Name" required> <br>
 
-        <input type="email" id="email" placeholder="Email Address" required> <br>
+        <input type="email" name="email" id="email" placeholder="Email Address" required> <br>
     
-        <select id="campus" required>
+        <select name="campus" required>
           <option value="" disabled selected hidden>Campus</option>
-          <option value="upd">UP Diliman</option>
-          <option value="uplb">UP Los Baños</option>
-          <option value="upm">UP Manila</option>
-          <option value="upv">UP Visayas</option>
-          <option value="upou">UP Open University</option>
-          <option value="upmin">UP Mindanao</option>
-          <option value="upb">UP Baguio</option>
-          <option value="upc">UP Cebu</option>
+          <option value="UP Diliman">UP Diliman</option>
+          <option value="UP Los Baños">UP Los Baños</option>
+          <option value="UP Manila">UP Manila</option>
+          <option value="UP Visayas">UP Visayas</option>
+          <option value="UP Open University">UP Open University</option>
+          <option value="UP Mindanao">UP Mindanao</option>
+          <option value="UP Baguio">UP Baguio</option>
+          <option value="UP Cebu">UP Cebu</option>
         </select>
-        <input type="text" id="course" placeholder="Course" required> <br>
+        <input type="text" name="course" placeholder="Course" required> <br>
 
-        <select id="year" required>
+        <select name="year" required>
           <option value="" disabled selected hidden>Year Standing</option>
-          <option value="1">1st Year</option>
-          <option value="2">2nd Year</option>
-          <option value="3">3rd Year</option>
-          <option value="4">4th Year</option>
-          <option value="5">5th Year and Above</option>
+          <option value="1st Year">1st Year</option>
+          <option value="2nd Year">2nd Year</option>
+          <option value="3rd Year">3rd Year</option>
+          <option value="4th Year">4th Year</option>
+          <option value="5th Year and Above">5th Year and Above</option>
         </select> <br>
 
         <label for="birthday" class="label">Birthday:</label>
-        <input type="date" id="birthday" required> <br> <br>
+        <input type="date" name="birthday" id="birthday" required> <br> <br>
 
-        <input type="password" id="password" placeholder="Password" required> <br>
-        <input type="password" id="password" placeholder="Confirm Password" required> <br> <br> <br> <br>
+        <input type="password" name="password" id="password" placeholder="Password" required> <br>
+        <input type="password" name="confPassword" id="confPassword" placeholder="Confirm Password" required> <br> <br> <br> <br>
 
         <button type="submit">Sign Up</button> <br> <br>
 
