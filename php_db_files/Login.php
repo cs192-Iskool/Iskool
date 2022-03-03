@@ -19,6 +19,13 @@
     session_start();
     $_SESSION["userID"] = $id["userID"];
     $_SESSION["firstName"] = $id["firstName"];
+    $_SESSION["lastName"] = $id["lastName"];
+    $_SESSION["birthday"] = $id["birthday"];
+    $_SESSION["campus"] = $id["campus"];
+    $_SESSION["course"] = $id["course"];
+    $_SESSION["yearStanding"] = $id["yearStanding"];
+    $_SESSION["emailAddress"] = $id["emailAddress"];
+    $_SESSION["password"] = $id["password"];
 
     header("location: ../HomePage.php");
     exit();
