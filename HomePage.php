@@ -18,7 +18,7 @@
     <div class="top">
         <div class="home">
             <button type="button" class="header_links">
-                <a href="HomePage.html">Iskool</a>
+                <a href="HomePage.php">Iskool</a>
             </button>
         </div>
         <div class="header_navigate">
@@ -32,7 +32,7 @@
         </div>
         <div class="dropdown_popup" id="dropdown_elements">
             <div>
-                <a href="AccountProfile.html">Profile</a>
+                <a href="AccountProfile.php">Profile</a>
             </div>
             <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
             <div>
