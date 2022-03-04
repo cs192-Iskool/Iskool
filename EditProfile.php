@@ -71,24 +71,24 @@
                                 <td>Name:</td>
                                 <td>
                                     <span>
-                                        <input type="text" name="fname" id="fname" placeholder="First Name" required>
+                                        <input type="text" name="fname" id="fname" value="<?php echo $_SESSION["firstName"]; ?>" required>
                                     </span>
                                     <span>
-                                        <input type="text" name="lname" id="lname" placeholder="Last Name" required>
+                                        <input type="text" name="lname" id="lname" value="<?php echo $_SESSION["lastName"]; ?>" required>
                                     </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Birthday:</td>
                                 <td>
-                                    <input type="date" name="birthday" id="birthday" required>
+                                    <input type="date" name="birthday" id="birthday" value="<?php echo $_SESSION["birthday"]; ?>"required>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Campus:</td>
                                 <td>
-                                    <select name="campus" required>
-                                    <option value="" disabled selected hidden>Campus</option>
+                                    <select name="campus" required defaultValue = "<?php echo $_SESSION["campus"]; ?>">
+                                    <option selected = "selected" hidden><?php echo $_SESSION["campus"]; ?></option>
                                     <option value="UP Diliman">UP Diliman</option>
                                     <option value="UP Los Baños">UP Los Baños</option>
                                     <option value="UP Manila">UP Manila</option>
@@ -103,14 +103,14 @@
                             <tr>
                                 <td>Course:</td>
                                 <td>
-                                    <input type="text" name="course" placeholder="Course" required>
+                                    <input type="text" name="course" value="<?php echo $_SESSION["course"]; ?>" required>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Year Standing:</td>
                                 <td>
                                     <select name="year" required>
-                                        <option value="" disabled selected hidden>Year Standing</option>
+                                    <option selected = "selected" hidden><?php echo $_SESSION["yearStanding"]; ?></option>
                                         <option value="1st Year">1st Year</option>
                                         <option value="2nd Year">2nd Year</option>
                                         <option value="3rd Year">3rd Year</option>
