@@ -6,12 +6,19 @@ body {
   background: linear-gradient(90deg, #FFFFFF 55%, #94051C 0);
 }
 
-h1 {
+.home {
   color: #94051C;
+  background-color: #FFFFFF;
+  border: none;
   font-size: 90px;
   position: fixed;
-  top: 10px;
-  left: 100px;
+  top: 65px;
+  left: 95px;
+}
+
+.home a {
+  text-decoration: none;
+  color: #94051C;
 }
 
 .register {
@@ -63,7 +70,7 @@ select:hover {
   margin-left: 4px;
 }
 
-button {
+.registerButton {
   cursor: pointer;
   color: #FFFFFF;
   background-color: #0C96E6;
@@ -75,7 +82,7 @@ button {
   left: 104px;
 }
 
-button:hover {
+.registerButton:hover {
   opacity: 0.8;
 }
 

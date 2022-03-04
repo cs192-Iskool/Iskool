@@ -6,12 +6,19 @@ body {
   background: linear-gradient(90deg, #94041B 45%, #FFFFFF 0);
 }
 
-h1 {
+.home {
   color: #94051C;
+  background-color: #FFFFFF;
+  border: none;
   font-size: 90px;
   position: fixed;
-  top: 80px;
-  left: 945px;
+  top: 140px;
+  left: 960px;
+}
+
+.home a {
+  text-decoration: none;
+  color: #94051C;
 }
 
 .login {
@@ -35,7 +42,7 @@ input:hover {
   border-color: #666666;
 }
 
-button {
+.loginButton {
   cursor: pointer;
   color: #FFFFFF;
   background-color: #0C96E6;
@@ -48,7 +55,7 @@ button {
   left: 1197px;
 }
 
-button:hover {
+.loginButton:hover {
   opacity: 0.8;
 }
 
