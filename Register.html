@@ -8,7 +8,9 @@
     <script defer src="js_files/Register.js"></script>
   </head>
   <body>
-    <h1>ISKOOL</h1>
+    <button type="button" class="home">
+      <a href="HomePage.php">ISKOOL</a>
+    </button>
 
     <form action="php_db_files/Register.php" onsubmit="return validate()" method="POST"> 
       <div class="register">
@@ -45,7 +47,7 @@
         <input type="password" name="password" id="password" placeholder="Password" required> <br>
         <input type="password" name="confPassword" id="confPassword" placeholder="Confirm Password" required> <br> <br> <br> <br>
 
-        <button type="submit">Sign Up</button> <br> <br>
+        <button type="submit" class="registerButton">Sign Up</button> <br> <br>
 
         <h5> Already have an account? <a href="Login.html"> Sign in</a>. </h5>
       </div>

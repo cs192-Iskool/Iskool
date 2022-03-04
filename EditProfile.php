@@ -1,5 +1,9 @@
 <?php
     session_start();
+
+    if (!isset($_SESSION["userID"])) {
+        header("location: Login.html");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +16,7 @@
         <link rel="stylesheet" href="css_files/header.css">
         <script defer src="js_files/AccountProfile.js"></script>
         <script defer src="js_files/header.js"></script>
+        <script defer src="js_files/Register.js"></script>
     </head>
     <body>
         <div class="top">
@@ -35,7 +40,7 @@
                 </div>
                 <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
                 <div>
-                    <a href="Login.html">Log Out</a>
+                    <a href="php_db_files/Logout.php">Log Out</a>
                 </div>
             </div>
         </div>
@@ -58,99 +63,100 @@
                 </div>
             </div>
             <div class="vertical" style="float: left;"></div>
-            <div class="info_box">
-                <div class="all_info">
-                    <h1>Basic Info</h1>
-                    <table>
-                        <tr>
-                            <td>Name:</td>
-                            <td>
-                                <span>
-                                    <input type="text" placeholder="First Name" required>
-                                </span>
-                                <span>
-                                    <input type="text" placeholder="Last Name" required>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Birthday:</td>
-                            <td>
-                                <input type="date" id="birthday" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Campus:</td>
-                            <td>
-                                <select required>
+            <form class="info_box" action="php_db_files/EditProfile.php" onsubmit="return validate()" method="POST">
+                <div>
+                    <div class="all_info">
+                        <h1>Basic Info</h1>
+                        <table>
+                            <tr>
+                                <td>Name:</td>
+                                <td>
+                                    <span>
+                                        <input type="text" name="fname" id="fname" placeholder="First Name" required>
+                                    </span>
+                                    <span>
+                                        <input type="text" name="lname" id="lname" placeholder="Last Name" required>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Birthday:</td>
+                                <td>
+                                    <input type="date" name="birthday" id="birthday" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Campus:</td>
+                                <td>
+                                    <select name="campus" required>
                                     <option value="" disabled selected hidden>Campus</option>
-                                    <option value="upd">UP Diliman</option>
-                                    <option value="uplb">UP Los Baños</option>
-                                    <option value="upm">UP Manila</option>
-                                    <option value="upv">UP Visayas</option>
-                                    <option value="upou">UP Open University</option>
-                                    <option value="upmin">UP Mindanao</option>
-                                    <option value="upb">UP Baguio</option>
-                                    <option value="upc">UP Cebu</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Course:</td>
-                            <td>
-                                <input type="text" placeholder="Course" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Year Standing:</td>
-                            <td>
-                                <select required>
-                                    <option value="" disabled selected hidden>Year Standing</option>
-                                    <option value="1">1st Year</option>
-                                    <option value="2">2nd Year</option>
-                                    <option value="3">3rd Year</option>
-                                    <option value="4">4th Year</option>
-                                    <option value="5">5th Year and Above</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
+                                    <option value="UP Diliman">UP Diliman</option>
+                                    <option value="UP Los Baños">UP Los Baños</option>
+                                    <option value="UP Manila">UP Manila</option>
+                                    <option value="UP Visayas">UP Visayas</option>
+                                    <option value="UP Open University">UP Open University</option>
+                                    <option value="UP Mindanao">UP Mindanao</option>
+                                    <option value="UP Baguio">UP Baguio</option>
+                                    <option value="UP Cebu">UP Cebu</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Course:</td>
+                                <td>
+                                    <input type="text" name="course" placeholder="Course" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Year Standing:</td>
+                                <td>
+                                    <select name="year" required>
+                                        <option value="" disabled selected hidden>Year Standing</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                        <option value="5th Year and Above">5th Year and Above</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="height: 50px;"></div>
+                    <div class="all_info">
+                        <h1>Account Details</h1>
+                        <table>
+                            <tr>
+                                <td>Email Address:</td>
+                                <td>
+                                    <?php echo $_SESSION["emailAddress"]; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>New Password:</td>
+                                <td>
+                                    <input type="password" name="password" id="password" placeholder="Password" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Confirm Password:</td>
+                                <td>
+                                    <input type="password" name="confPassword" id="confPassword" placeholder="Confirm Password" required>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="height: 50px;"></div>
+                    <div class="all_info" style="border-color: white;">
+                        <button type="submit">Confirm</button>
+                        <a href="AccountProfile.php">
+                            <button type="button" style="float: right;  margin-right: 30px;">Cancel</button>
+                        </a>
+                    </div>
+                    
                 </div>
-                <div style="height: 50px;"></div>
-                <div class="all_info">
-                    <h1>Account Details</h1>
-                    <table>
-                        <tr>
-                            <td>Email Address:</td>
-                            <td>
-                                <input type="email" placeholder="Email Address" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>New Password:</td>
-                            <td>
-                                <input type="password" placeholder="Password" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Confirm Password:</td>
-                            <td>
-                                <input type="password" placeholder="Confirm Password" required>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div style="height: 50px;"></div>
-                <div class="all_info" style="border-color: white;">
-                    <a href="AccountProfile.php">
-                        <button>Confirm</button>
-                    </a>
-                    <a href="AccountProfile.php">
-                        <button style="float: right;  margin-right: 30px;">Cancel</button>
-                    </a>
-                </div>
-                
-            </div>
+            </form>
+            
         </div>
     </body>
 </html>

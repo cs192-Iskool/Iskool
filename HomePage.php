@@ -22,13 +22,20 @@
             </button>
         </div>
         <div class="header_navigate">
-            <button type="button" class="header_links">My Ads</button>
-            <button type="button" class="header_links">Bookings</button>
-            <button type="button" class="header_links">Messages</button>
-            <button type="button" class="header_links">(notif)</button>
-            <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
-                <img class="corner_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
-            </button>
+            <?php
+                if (isset($_SESSION["userID"])) {
+                    echo "<button type='button' class='header_links'>My Ads</button>";
+                    echo "<button type='button' class='header_links'>Bookings</button>";
+                    echo "<button type='button' class='header_links'>Messages</button>";
+                    echo "<button type='button' class='header_links'>(notif)</button>";
+                    echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'] . "
+                        <img class='corner_prof_pic' src='images/profpic.jpg' alt='User's current profile picture.'>
+                        </button>";
+                } else {
+                    echo "<button type='button' class='header_links'><a href='Register.html'>Sign Up</a></button>";
+                    echo "<button type='button' class='header_links'><a href='Login.html'>Sign In</a></button>";
+                }
+            ?>
         </div>
         <div class="dropdown_popup" id="dropdown_elements">
             <div>
@@ -36,7 +43,7 @@
             </div>
             <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
             <div>
-                <a href="Login.html">Log Out</a>
+                <a href="php_db_files/Logout.php">Log Out</a>
             </div>
         </div>
     </div>

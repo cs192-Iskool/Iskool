@@ -7,14 +7,16 @@
     <title>Iskool: Sign In</title>
   </head>
   <body>
-    <h1>ISKOOL</h1>
+    <button type="button" class="home">
+      <a href="HomePage.php">ISKOOL</a>
+    </button>
 
     <form action="php_db_files/Login.php" method="POST"> 
       <div class="login">
         <input type="email" name="email" placeholder="Email Address" required>
         <input type="password" name="password" placeholder="Password" required>
     
-        <button type="submit">Log In</button>
+        <button type="submit" class="loginButton">Log In</button>
       </div>
     </form>
 

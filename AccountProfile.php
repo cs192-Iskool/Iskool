@@ -1,5 +1,9 @@
 <?php
     session_start();
+
+    if (!isset($_SESSION["userID"])) {
+        header("location: Login.html");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +39,7 @@
                 </div>
                 <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
                 <div>
-                    <a href="Login.html">Log Out</a>
+                    <a href="php_db_files/Logout.php">Log Out</a>
                 </div>
             </div>
         </div>
