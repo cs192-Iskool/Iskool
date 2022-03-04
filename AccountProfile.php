@@ -112,7 +112,9 @@
                     <div class="message">
                         <div style="padding-top: 10px;">Are you sure you want to delete your account?</div>
                         <div style="padding-bottom: 40px;">This action cannot be undone.</div>
-                        <button id="continue_delete" style="float: left;">Yes, delete my account</button>
+                        <form action="php_db_files/deleteAccount.php" method="POST">
+                            <button id="continue_delete" style="float: left;">Yes, delete my account</button>
+                        </form>
                         <button id="close_delete_message" style="float: right;">No, don't delete my account</button>
                     </div>
                     

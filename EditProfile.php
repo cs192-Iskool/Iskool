@@ -16,7 +16,6 @@
         <link rel="stylesheet" href="css_files/header.css">
         <script defer src="js_files/AccountProfile.js"></script>
         <script defer src="js_files/header.js"></script>
-        <script defer src="js_files/Register.js"></script>
     </head>
     <body>
         <div class="top">
