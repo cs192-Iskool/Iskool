@@ -25,7 +25,9 @@
                 </button>
             </div>
             <div class="header_navigate">
-                <button class="header_links">My Ads</button>
+                <button class="header_links">
+                    <a href="MyAds.php">My Ads</a>
+                </button>
                 <button class="header_links">Bookings</button>
                 <button class="header_links">Messages</button>
                 <button class="header_links">(notif)</button>
