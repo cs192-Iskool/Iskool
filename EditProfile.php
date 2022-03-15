@@ -32,7 +32,13 @@
                 <button class="header_links">Messages</button>
                 <button class="header_links">(notif)</button>
                 <button class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
-                    <img class="corner_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
+                    <?php
+                        if($_SESSION['profPic']) {
+                            echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                        } else {
+                            echo "<img class='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                        }
+                    ?>
                 </button>
             </div>
             <div class="dropdown_popup" id="dropdown_elements">
@@ -48,10 +54,20 @@
         <div class="horizontal"></div>
         <div class="prof_pic">
             <button class="main_prof_pic" id="prof_pic_display" onclick="change_prof_pic()">
-                <img style="height: 200px; border-radius: 50%;" src="images/profpic.jpg" alt="User's current profile picture.">
+                <?php
+                    if($_SESSION['profPic']) {
+                        echo "<img style='height: 200px; width: 200px; border-radius: 50%;' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                    } else {
+                        echo "<img style='height: 200px; width: 200px; border-radius: 50%;' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                    }
+                ?>
             </button>
             <div class="change_prof_pic" id="prof_pic_dropdown">
-                Change profile picture
+                <form id="submit_prof_pic" action="php_db_files/ChangePicture.php" method="POST" enctype="multipart/form-data">
+                    <label for="upload_pic" class="upload_btn_style">Change profile picture</label>
+                    <input id="upload_pic" type="file" name="profpic">
+                </form>
+                
             </div>
         </div>
         <div class="horizontal"></div>
