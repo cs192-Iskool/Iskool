@@ -70,7 +70,7 @@
                             <td>Price:</td>
                             <td>
                                 <span>
-                                    <input type="text" name="price" id="price" required><!--value="php script"-->
+                                    <input type="number" name="price" id="price" min="1" required><!--value="php script"-->
                                 </span>
                                 <span>per hour</span>
                             </td>

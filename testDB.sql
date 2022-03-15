@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `testdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `testdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `testdb`;
 -- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
 --
@@ -36,7 +36,7 @@ CREATE TABLE `userinfo` (
   `password` varchar(45) NOT NULL,
   `profPic` blob,
   PRIMARY KEY (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,6 +48,34 @@ LOCK TABLES `userinfo` WRITE;
 /*!40000 ALTER TABLE `userinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `adinfo`
+--
+
+DROP TABLE IF EXISTS `adinfo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `adinfo` (
+  `userID` int(11) NOT NULL,
+  `adID` int(11) NOT NULL AUTO_INCREMENT,
+  `subject` varchar(45) NOT NULL,
+  `price` int(11) NOT NULL,
+  `image` blob,
+  PRIMARY KEY (`adID`),
+  KEY `userID` (`userID`),
+  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `userinfo` (`userid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `adinfo`
+--
+
+LOCK TABLES `adinfo` WRITE;
+/*!40000 ALTER TABLE `adinfo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `adinfo` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
