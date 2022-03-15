@@ -3,6 +3,11 @@ function change_prof_pic(){
     document.getElementById("prof_pic_dropdown").classList.toggle("popup");
 }
 
+document.getElementById("upload_pic").onchange = function() {
+  document.getElementById("submit_prof_pic").submit();
+  document.getElementById("submit_prof_pic").reset();
+}
+
 // for delete button
 
 const delete_button = document.getElementById("open_delete_message")
