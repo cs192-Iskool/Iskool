@@ -1,9 +1,13 @@
 <?php
+    include_once 'php_db_files/Database.php';
     session_start();
 
     if (!isset($_SESSION["userID"])) {
         header("location: Login.html");
     }
+
+    $user = "SELECT * FROM adinfo WHERE userID = '".$_SESSION["userID"]."';";
+    $result = mysqli_query($conn, $user);
 ?>
 
 <!DOCTYPE html>
@@ -66,6 +70,14 @@
             <div class="vertical" style="float: left;"></div>
             <div class="info_box">
                 <div class="all_info" style="border-color: white;">
+                    <?php
+                        while($row = mysqli_fetch_assoc($result)) {
+                            echo ''.$row["subject"].' <br>';
+                            echo ''.$row["price"].' <br>';
+                            echo '<img src="data:image;base64,'.base64_encode($row['image']).'" /> <br>';
+                        }
+                    ?>
+                    <br>
                     <a href="CreateAds.php">
                         <button type="button">Create Ad</button>
                     </a>
