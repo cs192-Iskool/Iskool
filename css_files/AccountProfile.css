@@ -25,15 +25,17 @@ td {
     border: 0px;
     border-radius: 50%;
     height: 200px;
+    width: 200px;
     position: relative;
     bottom: -70px;
 }
 
 .change_prof_pic {
     display: none;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: #f1f1f1;
-    width: 150px;
+    width: 164px;
     position: relative;
     left: 170px;
 }
@@ -44,6 +46,15 @@ td {
 
 .popup {
     display: block;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload_btn_style {
+    padding: 10px;
+    cursor: pointer;
 }
 
 .main {
