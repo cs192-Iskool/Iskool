@@ -26,6 +26,7 @@
     $_SESSION["yearStanding"] = $id["yearStanding"];
     $_SESSION["emailAddress"] = $id["emailAddress"];
     $_SESSION["password"] = $id["password"];
+    $_SESSION["profPic"] = $id["profPic"];
 
     header("location: ../HomePage.php");
     exit();
