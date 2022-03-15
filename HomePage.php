@@ -24,7 +24,7 @@
         <div class="header_navigate">
             <?php
                 if (isset($_SESSION["userID"])) {
-                    echo "<button type='button' class='header_links'>My Ads</button>";
+                    echo "<button type='button' class='header_links'><a href='MyAds.php'>My Ads</a></button>";
                     echo "<button type='button' class='header_links'>Bookings</button>";
                     echo "<button type='button' class='header_links'>Messages</button>";
                     echo "<button type='button' class='header_links'>(notif)</button>";
