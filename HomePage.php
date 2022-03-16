@@ -28,9 +28,13 @@
                     echo "<button type='button' class='header_links'>Bookings</button>";
                     echo "<button type='button' class='header_links'>Messages</button>";
                     echo "<button type='button' class='header_links'>(notif)</button>";
-                    echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'] . "
-                        <img class='corner_prof_pic' src='images/profpic.jpg' alt='User's current profile picture.'>
-                        </button>";
+                    echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'];
+                    if($_SESSION['profPic']) {
+                        echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                    } else {
+                        echo "<img class='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                    }
+                    echo "</button>";
                 } else {
                     echo "<button type='button' class='header_links'><a href='Register.html'>Sign Up</a></button>";
                     echo "<button type='button' class='header_links'><a href='Login.html'>Sign In</a></button>";

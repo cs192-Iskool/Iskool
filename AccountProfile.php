@@ -32,7 +32,13 @@
                 <button class="header_links">Messages</button>
                 <button class="header_links">(notif)</button>
                 <button class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
-                    <img class="corner_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
+                    <?php
+                        if($_SESSION['profPic']) {
+                            echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                        } else {
+                            echo "<img class='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                        }
+                    ?>
                 </button>
             </div>
             <div class="dropdown_popup" id="dropdown_elements">
@@ -47,7 +53,13 @@
         </div>
         <div class="horizontal"></div>
         <div class="prof_pic">
-            <img class="main_prof_pic" src="images/profpic.jpg" alt="User's current profile picture.">
+            <?php
+                if($_SESSION['profPic']) {
+                    echo "<img class='main_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                } else {
+                    echo "<img class='main_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                }
+            ?>
         </div>
         <div class="horizontal"></div>
         <div class="main">
