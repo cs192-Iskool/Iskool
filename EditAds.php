@@ -1,9 +1,15 @@
 <?php
+    include_once 'php_db_files/Database.php';
     session_start();
 
     if (!isset($_SESSION["userID"])) {
         header("location: Login.html");
     }
+
+    $adID = $_GET["ad"];
+    $ad = "SELECT * FROM adinfo WHERE adID = '".$adID."';";
+    $result = mysqli_query($conn, $ad);
+    $row = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -63,20 +69,20 @@
                     </div>
                 </div>
             </div>
-            <form class="info_box" action="php_db_files/EditAds.php" method="POST" enctype="multipart/form-data">
+            <form class="info_box" action="php_db_files/EditAds.php?ad=<?php echo $adID ?>" method="POST" enctype="multipart/form-data">
                 <div class="all_info">
                     <h1>Basic Info</h1>
                     <table>
                         <tr>
                             <td>Subject:</td>
-                            <td><!--php script for subject of ad--></td>
+                            <td><?php echo ''.$row["subject"].''; ?></td>
                         </tr>
                         <tr>
                             <td>Price:</td>
                             <td>
                                 <form action="EditAds.php" method="POST"><!--put some validating function in js-->
                                     <span>
-                                        <input type="text" name="price" id="price" required><!--value="php script"-->
+                                        <input type="number" name="price" id="price" min="1" value="<?php echo $row["price"]; ?>" required><!--value="php script"-->
                                     </span>
                                     <span>per hour</span>
                                 </form>

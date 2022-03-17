@@ -81,7 +81,7 @@
                         echo '<img class="options_toggle" src="images/options.png" alt="Delete or edit ad.">';
                         echo '<div class="ad_popup" id="popup_'.$row["adID"].'">
                                     <div>
-                                        <a href="php_db_files/EditAds.php">Edit Ad</a>
+                                        <a href="EditAds.php?ad='.$row["adID"].'">Edit Ad</a>
                                     </div>
                                     <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
                                     <div>
@@ -89,11 +89,7 @@
                                     </div>
                                 </div>';
                         echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
-                        if($row['image'] === NULL) {
-                            echo '<img style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
-                        } else {
-                            echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
-                        }
+                        echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
                         echo '</div>';
                         echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
                         echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
