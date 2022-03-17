@@ -63,7 +63,6 @@
                     </div>
                 </div>
             </div>
-            <div class="vertical" style="float: left;"></div>
             <form class="info_box" action="php_db_files/EditAds.php" method="POST" enctype="multipart/form-data">
                 <div class="all_info">
                     <h1>Basic Info</h1>

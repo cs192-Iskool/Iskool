@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="css_files/MyAds.css">
         <link rel="stylesheet" href="css_files/header.css">
         <script defer src="js_files/header.js"></script>
+        <script defer src="js_files/MyAds.js"></script>
     </head>
     <body>
         <div class="top">
@@ -73,21 +74,53 @@
                     </div>
                 </div>
             </div>
-            <div class="vertical" style="float: left;"></div>
-            <div class="info_box">
-                <div class="all_info" style="border-color: white;">
-                    <?php
-                        while($row = mysqli_fetch_assoc($result)) {
-                            echo ''.$row["subject"].' <br>';
-                            echo ''.$row["price"].' <br>';
-                            echo '<img src="data:image;base64,'.base64_encode($row['image']).'" /> <br>';
-                        }
-                    ?>
-                    <br>
+            <div style="display: flex; flex-wrap: wrap;" class="info_box">
+                <?php
+                    while($row = mysqli_fetch_assoc($result)) {
+                        echo '<div class="ads" id="'.$row["adID"].'" onclick="show_ad_options(this.id)">';
+                        echo '<img class="options_toggle" src="images/options.png" alt="Delete or edit ad.">';
+                        echo '<div class="ad_popup" id="popup_'.$row["adID"].'">
+                                    <div>
+                                        <a href="php_db_files/EditAds.php">Edit Ad</a>
+                                    </div>
+                                    <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
+                                    <div>
+                                        <button class="open_delete_message" id="delete_'.$row["adID"].'" onclick="show_delete_ad(id)">Delete Ad</button>
+                                    </div>
+                                </div>';
+                        echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
+                        echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
+                        echo '</div>';
+                        echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
+                        echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
+                        echo '<div class="subject">';
+                        echo ''.$row["subject"].'';
+                        echo '</div>';
+                        echo '<div class="price">';
+                        echo ''.$row["price"].'/hr';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                ?>
+                <div class="ads">
                     <a href="CreateAds.php">
-                        <button type="button">Create Ad</button>
+                        <img class="add_ad_button" src="images/add_ad.png" alt="Create ad button.">
                     </a>
                 </div>
+                <div id="delete_popup">
+                    <div class="message">
+                        <div style="padding-top: 10px;">Are you sure you want to delete this ad?</div>
+                        <div style="padding-bottom: 40px;">This action cannot be undone.</div>
+                        <form action="php_db_files/DeleteAd.php" method="POST">
+                            <input style="display: none;" type="text" name="ad" id="ad" required>
+                            <button type="submit" id="continue_delete" style="float: left;">Yes, delete this ad</button>
+                        </form>
+                        <button id="close_delete_message" style="float: right;">No, don't delete this ad</button>
+                    </div>
+                    
+                </div>
+                <div id="delete_overlay"></div>
             </div>
             
         </div>
