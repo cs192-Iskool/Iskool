@@ -97,7 +97,7 @@
                     <table>
                         <tr>
                             <td>
-                                Upload up to X photos promoting your service. The first photo will be used as a thumbnail for your ad.
+                                You can upload a photo promoting your service. This can be used as a thumbnail for your ad.
                             </td>
                         </tr>
                     </table>
