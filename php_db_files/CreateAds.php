@@ -26,10 +26,6 @@
                     VALUES ('$userID', '$subject', '$price', '$adImg');";
         $insert = mysqli_query($conn, $newAd);
 
-        echo '<script>
-        alert("Ad successfully created!");
-        location.href = "../MyAds.php";
-        </script>';
       } else {
         echo '<script>
         alert("Error! Your file is too big.");
@@ -42,9 +38,18 @@
       location.href = "../CreateAds.php";
       </script>';
     }
+  } else if($imgExt === '') {
+    $newAd = "INSERT INTO adinfo (userID, subject, price) 
+              VALUES ('$userID', '$subject', '$price');";
+    $insert = mysqli_query($conn, $newAd);
   } else {
     echo '<script>
     alert("Error! You can only upload .jpg, .jpeg, or .png files.");
     location.href = "../CreateAds.php";
     </script>';
   }
+    
+  echo '<script>
+        alert("Ad successfully created!");
+        location.href = "../MyAds.php";
+        </script>';

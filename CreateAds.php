@@ -63,7 +63,6 @@
                     </div>
                 </div>
             </div>
-            <div class="vertical" style="float: left;"></div>
             <form class="info_box" action="php_db_files/CreateAds.php" method="POST" enctype="multipart/form-data">
                 <div class="all_info">
                     <h1>Basic Info</h1>
@@ -89,7 +88,7 @@
                     <table>
                         <tr>
                             <td>
-                                Upload up to X photos promoting your service. The first photo will be used as a thumbnail for your ad.
+                                You can upload a photo promoting your service. This can be used as a thumbnail for your ad.
                             </td>
                         </tr>
                     </table>
