@@ -89,7 +89,11 @@
                                     </div>
                                 </div>';
                         echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
-                        echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
+                        if($row['image'] === NULL) {
+                            echo '<img style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
+                        } else {
+                            echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
+                        }
                         echo '</div>';
                         echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
                         echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
