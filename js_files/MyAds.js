@@ -13,6 +13,8 @@ function show_delete_ad(id) {
     const delete_overlay = document.getElementById("delete_overlay");
     const msg = document.getElementById("delete_popup");
     const cancel = document.getElementById("close_delete_message");
+    
+    document.getElementById("ad").value = id;
 
     delete_overlay.classList.add("active");
     msg.classList.add("active");
