@@ -77,8 +77,8 @@
             <div style="display: flex; flex-wrap: wrap;" class="info_box">
                 <?php
                     while($row = mysqli_fetch_assoc($result)) {
-                        echo '<div class="ads" id="'.$row["adID"].'" onclick="show_ad_options(this.id)">';
-                        echo '<img class="options_toggle" src="images/options.png" alt="Delete or edit ad.">';
+                        echo '<div class="ads">';
+                        echo '<img class="options_toggle" id="'.$row["adID"].'" onclick="show_ad_options(this.id)" src="images/options.png" alt="Delete or edit ad.">';
                         echo '<div class="ad_popup" id="popup_'.$row["adID"].'">
                                     <div>
                                         <a href="EditAds.php?ad='.$row["adID"].'">Edit Ad</a>
