@@ -59,6 +59,7 @@ td {
     padding-top: 75px;
     padding-left: 100px;
     width: 80%;
+    min-height: 620px;
 }
 
 .all_info {
