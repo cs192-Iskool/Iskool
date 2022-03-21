@@ -1,0 +1,147 @@
+body {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+
+
+td {
+    padding: 0px 10px 25px 0px;
+    min-width: 125px;
+    justify-content: left;
+    align-items: left;
+}
+
+.vertical {
+    border-left: 3px solid black;
+    height: 1000px;
+}
+
+.horizontal{
+    height: 100px;
+    background-color: black;
+}
+.prof_pic {
+    padding-left: 15%;
+    height: 175px;
+    z-index: 1;
+    border-bottom:5px black solid;
+    position: relative;
+    
+}
+
+.main_prof_pic {
+    padding: 0px;
+    border: 0px;
+    border-radius: 50%;
+    height: 200px;
+    position: relative;
+    bottom: -70px;
+    left: -600px;
+}
+
+.change_prof_pic {
+    display: none;
+    padding: 10px;
+    background-color: #f1f1f1;
+    width: 150px;
+    position: relative;
+    left: 170px;
+}
+
+.change_prof_pic:hover {
+    background-color: #aaaaaa;
+}
+
+.popup {
+    display: block;
+}
+
+.main {
+    display: flex;
+}
+
+.sidebar {
+    padding-top: 20px;
+    width: 10%;
+    position: relative;
+   
+    z-index: 0;
+    top: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.sidebar_navigate {
+    width: 50%;
+    left: 50%;
+    position: relative;
+    transform: translate(-50%);
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.sidebar_navigate div {
+    padding: 10px;
+}
+
+.sidebar_navigate a {
+    text-decoration: none;
+    color: black;
+}
+
+.info_box {
+    
+    padding-top: 200px;
+    padding-left: 100px;
+    width: 80%;
+}
+
+.all_info {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding-left: 30px;
+    width: 80%;
+    
+}
+
+#delete_popup {
+    background-color: #dddddd;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    text-align: center;
+    border-radius: 10px;
+    padding: 15px;
+    width: 350px;
+    z-index: 3;
+}
+
+#delete_popup.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#delete_overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+#delete_overlay.active {
+    opacity: 0.5;
+    pointer-events: all;
+}
+
+input{
+    height:30px;
+    position: relative;
+    
+}

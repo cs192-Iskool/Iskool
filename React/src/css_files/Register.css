@@ -1,0 +1,134 @@
+* {
+  font-family: "Verdana";
+}
+
+.maindiv{
+  
+  height: 100vh;
+  align:left;
+}
+
+.regh1 {
+  color: #94051C;
+  font-size: 90px;
+  position: fixed;
+  top: 10px;
+  left: 100px;
+}
+
+.home{
+  color: #94051C;
+  background-color: #FFFFFF;
+  border: none;
+  font-size: 90px;
+  position: fixed;
+  top: 65px;
+  left: 95px;
+}
+
+.home a{
+  text-decoration: none;
+  color: #94051C;
+}
+.register {
+  position: fixed;
+  top: 215px;
+  left: 100px;
+  background-color: red;
+  justify-content: left;
+  
+}
+
+.register_form{
+  list-style: none;
+  width: 500px;
+  justify-content: left;
+  text-align: center;
+}
+
+input {
+  font-size: 14px;
+  background-color: #FCFCFC;
+  border-radius: 5px;
+  border: 2px solid #CECECE;
+  width: 275px;
+  height: 20px;
+  padding: 5px;
+  margin: 4px;
+  position: sticky;
+  justify-self: left;
+  left: ;
+}
+
+form{
+  position: fixed;
+  width: 100%;
+  justify-content: left;
+
+}
+
+input:hover {
+  border-color: #666666;
+}
+
+select {
+  font-size: 14px;
+  background-color: #FCFCFC;
+  color: black;
+  border-radius: 5px;
+  border: 2px solid #CECECE;
+  width: 289px;
+  height: 34px;
+  padding: 5px;
+  margin: 4px;
+  position:relative;
+}
+
+select:invalid { 
+  color: gray; 
+}
+
+select:invalid option:not(:disabled) { 
+  color: black;
+}
+
+select:hover {
+  border-color: #666666;
+}
+
+.label {
+  margin-left: 4px;
+}
+
+.register{
+  position: absolute;
+  left: 0px;
+  width: 50%;
+  height: 100vh;
+  background-color: #94051C;
+  justify-items: left;
+}
+
+.register_button {
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: #0C96E6;
+  border-radius: 5px;
+  border: 2px solid #0C96E6;
+  width: 75px;
+  padding: 5px;
+  position: fixed;
+  left: 104px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+h5 {
+  color: #222222;
+  font-size: 12px;
+  position: fixed;
+  left: 104px;
+  margin-top: 5px;
+}
