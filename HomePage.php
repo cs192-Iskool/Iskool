@@ -1,4 +1,5 @@
 <?php
+    include_once 'php_db_files/Database.php';
     session_start();
 ?>
 
@@ -10,6 +11,7 @@
     <title>Iskool</title>
     <link rel = "stylesheet" href = "css_files/homepage.css" />
     <link rel = "stylesheet" href = "css_files/header.css">
+    <link rel = "stylesheet" href = "css_files/homepageAds.css">
     
 </head>
 <script src = "js_files/homepage.js"></script>
@@ -81,8 +83,10 @@
                 </div>
             </li>
         </ul>
+        <form id="submit_search" class = "sort" action="php_db_files/searchAds.php" method="POST">
         <ul class = "sort">
-            <li class = "sort__item"><input type = "text" id = "search" value = "Search"></li>
+            <li class = "sort__item"><input type = "text" id = "search" name = "search" placeholder = "Search"></li>
+            <button type="submit" style="display: none;" id="search_ad">Submit</button>
             <li class = "sort__item">
                 <div class = "dropdown">
                     Sort By:
@@ -96,7 +100,47 @@
                 </div>
             </li>
         </ul>
+        </form>
         
+        
+    </div>
+    <div style="display: flex; flex-wrap: wrap;" class="ads_display">
+        <?php
+            $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
+            $result = mysqli_query($conn, $user);
+            while($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="ads">';
+                echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
+                if($row['image'] === NULL) {
+                    echo '<img style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
+                } else {
+                    echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
+                }
+                echo '</div>';
+                echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
+                echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
+                echo '<div class="primary_info">';
+                echo ''.$row["firstName"].', '.$row["course"].'<br>'.$row["campus"].'';
+                echo '</div>';
+                echo '<div class="ratings">';
+                echo '(This is where the ratings will go)';
+                echo '</div>';
+                echo '<div class="subject">';
+                echo ''.$row["subject"].'';
+                echo '</div>';
+                echo '<div class="price">';
+                echo ''.$row["price"].'/hr';
+                echo '</div>';
+                echo '<div class="book_btn">';
+                echo '<button>Book</button>';
+                echo '</div>';
+                echo '<div class="reviews">';
+                echo '<a href="#">Reviews<a>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+        ?>
     </div>
 
     
