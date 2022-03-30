@@ -25,6 +25,7 @@
 .header_links {
     margin-right: 30px;
     border: none;
+    padding: 0px;
     background-color: maroon;
     color: white;
     font-size: medium;
