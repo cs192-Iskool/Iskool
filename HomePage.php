@@ -91,8 +91,7 @@
                 <div class = "dropdown">
                     Sort By:
                 </div>
-                <button class = "dropbtn" onclick="sortbyClick()">Newest</button>
-                
+                <div class = "dropbtn" onclick="sortbyClick()">Newest</div>
                 <div class = "dropdown-content" id = "dropdownContainer">
                     <a href = "#">Newest</a>
                     <a href = "#">Lowest Price</a>
@@ -101,8 +100,6 @@
             </li>
         </ul>
         </form>
-        
-        
     </div>
     <div style="display: flex; flex-wrap: wrap;" class="ads_display">
         <?php
@@ -115,15 +112,18 @@
                 echo '<div class="ads">';
                 echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
                 if($row['image'] === NULL) {
-                    echo '<img style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
+                    echo '<img id="img_'.$row["adID"].'" onclick="show_thumbnail(this.id)" style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
                 } else {
-                    echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
+                    echo '<img id="img_'.$row["adID"].'" onclick="show_thumbnail(this.id)" style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
                 }
                 echo '</div>';
                 echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
                 echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
                 echo '<div class="primary_info">';
-                echo ''.$row["firstName"].', '.$row["course"].'<br>'.$row["campus"].'';
+                echo ''.$row["firstName"].'';
+                echo '</div>';
+                echo '<div class="secondary_info">';
+                echo ''.$row["course"].'<br>'.$row["campus"].'';
                 echo '</div>';
                 echo '<div class="ratings">';
                 echo '(This is where the ratings will go)';
@@ -145,8 +145,11 @@
                 echo '</div>';
                 echo '</div>';
             }
+            $_SESSION['search'] = "";
         ?>
     </div>
+    <div id="pic_overlay"></div>
+    <img id="pic">
 
     
 </body>
