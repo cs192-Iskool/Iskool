@@ -2,7 +2,18 @@
 
 $dbServername = "localhost";
 $dbUsername = "root";
-$dbPassword = "password";
+$dbPassword = "";
 $dbName = "testdb";
 
-$conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
+try {
+  $conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
+} catch (Exception $e ) {
+  echo '<script type ="text/JavaScript">';  
+  echo 'alert("Error! There is no database connection.");';  
+  session_start();
+  session_unset();
+  session_destroy();
+  echo 'window.location.href = "http://localhost/Iskool/Login.html";';
+  echo '</script>'; 
+  exit;
+}
