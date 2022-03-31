@@ -106,6 +106,9 @@
     </div>
     <div style="display: flex; flex-wrap: wrap;" class="ads_display">
         <?php
+            if (!(isset($_SESSION['userID'])) && !(isset($_SESSION['search']))) {
+                $_SESSION['search'] = "";
+            }
             $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
             $result = mysqli_query($conn, $user);
             while($row = mysqli_fetch_assoc($result)) {
@@ -131,9 +134,11 @@
                 echo '<div class="price">';
                 echo ''.$row["price"].'/hr';
                 echo '</div>';
-                echo '<div class="book_btn">';
-                echo '<button>Book</button>';
-                echo '</div>';
+                if (isset($_SESSION['userID'])) {
+                    echo '<div class="book_btn">';
+                    echo '<button>Book</button>';
+                    echo '</div>';
+                }
                 echo '<div class="reviews">';
                 echo '<a href="#">Reviews<a>';
                 echo '</div>';
