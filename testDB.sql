@@ -62,6 +62,7 @@ CREATE TABLE `adinfo` (
   `subject` varchar(45) NOT NULL,
   `price` int(11) NOT NULL,
   `image` blob,
+  `timeCreated` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`adID`),
   KEY `userID` (`userID`),
   CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `userinfo` (`userid`) ON DELETE CASCADE
