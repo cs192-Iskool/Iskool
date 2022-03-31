@@ -19,7 +19,7 @@
     font-size: 1.2rem;
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 2;
 }
 
 .menubar__container{
@@ -80,6 +80,8 @@
     border: none;
     width: 100px;
     font-size: 20px;
+    user-select: none;
+    cursor: pointer;
 }
 
 .dropdown{
