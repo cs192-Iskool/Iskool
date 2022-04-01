@@ -123,7 +123,12 @@
                 echo ''.$row["firstName"].'';
                 echo '</div>';
                 echo '<div class="secondary_info">';
-                echo ''.$row["course"].'<br>'.$row["campus"].'';
+                echo '<div class="course">';
+                echo ''.$row["course"].'';
+                echo '</div>';
+                echo '<div class="campus">';
+                echo ''.$row["campus"].'';
+                echo '</div>';
                 echo '</div>';
                 echo '<div class="ratings">';
                 echo '(This is where the ratings will go)';
