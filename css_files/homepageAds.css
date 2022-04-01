@@ -6,7 +6,7 @@
 .ads {
     min-width: 300px;
     width: 300px;
-    height: 420px;
+    height: 450px;
     border: 2px solid black;
     margin: 15px;
 }
@@ -15,9 +15,10 @@
     display: flex;
     align-items: center;
     width: 100%;
-    height: 230px;
+    height: 250px;
     overflow: hidden;
     z-index: 1;
+    cursor: pointer;
 }
 
 .sp_horizontal {
@@ -26,47 +27,98 @@
 
 .ad_info {
     position: relative;
-    align-items: center;
-    height: 52px;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 197px;
 }
 
 .primary_info {
+    display: flex;
+    align-items: center;
     width: 100%;
-    padding: 15px;
+    padding-top: 5px;
+    height: 40px;
     font-size: x-large;
+}
+
+.secondary_info {
+    display: flex;
+    align-items: flex-end;
+    min-height: 57px;
+    width: 100%;
+    font-size: medium;
+    flex-direction: column;
+}
+
+.course {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 38px;
+}
+
+.campus {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 19px;
 }
 
 .ratings {
     width: 100%;
-    padding-left: 15px;
+    padding-top: 5px;
+    font-size: small;
 }
 
 .subject {
-    padding-left: 15px;
-    padding-top: 15px;
+    padding-top: 10px;
     width: 135px;
     float: left;
 }
 
 .price {
-    padding-right: 15px;
-    padding-top: 15px;
+    padding-top: 10px;
     width: 135px;
     text-align: right;
     float: right;
 }
 
 .book_btn {
-    padding-left: 15px;
     padding-top: 15px;
     width: 135px;
     float: left;
 }
 
 .reviews {
-    padding-right: 15px;
     padding-top: 15px;
     width: 135px;
     text-align: right;
     float: right;
+}
+
+#pic_overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 4;
+}
+
+#pic_overlay.active {
+    opacity: 0.5;
+    pointer-events: all;
+}
+
+#pic {
+    display: none;
+    position: fixed;
+    z-index: 5;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 700px;
 }
