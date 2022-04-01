@@ -44,7 +44,7 @@
 .secondary_info {
     display: flex;
     align-items: flex-end;
-    min-height: 50px;
+    min-height: 56px;
     width: 100%;
     font-size: medium;
 }
