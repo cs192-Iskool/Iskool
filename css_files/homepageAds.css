@@ -44,9 +44,24 @@
 .secondary_info {
     display: flex;
     align-items: flex-end;
-    min-height: 56px;
+    min-height: 57px;
     width: 100%;
     font-size: medium;
+    flex-direction: column;
+}
+
+.course {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 38px;
+}
+
+.campus {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 19px;
 }
 
 .ratings {
