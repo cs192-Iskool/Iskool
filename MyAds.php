@@ -32,10 +32,10 @@
                 <button class="header_links">
                     <a href="MyAds.php">My Ads</a>
                 </button>
-                <button class="header_links">Bookings</button>
-                <button class="header_links">Messages</button>
-                <button class="header_links">(notif)</button>
-                <button class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
+                <button class="header_links" class="header_links">Bookings</button>
+                <button class="header_links" class="header_links">Messages</button>
+                <button class="header_links" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
+                <button class="header_links" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
                             echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
@@ -45,6 +45,42 @@
                     ?>
                 </button>
             </div>
+            <?php
+                echo "<div class='notif_panel' id='notifs'>";
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." ORDER BY timeCreated DESC;";
+                $notifsList = mysqli_query($conn, $getNotifs);
+                for($i = 0; $i < 6; $i++) {
+                    if($notif = mysqli_fetch_assoc($notifsList)){
+                        echo "<div class='notif'>";
+                        echo "<div class='notif_message'>";
+                        if($notif['status'] == 1){
+                            # new booking
+                            echo "You have received a booking request from (name) for ".$notif['subject'].".";
+                        } else if($notif['status'] == 2){
+                            # accepted booking
+                            echo "tbd";
+                        } else if($notif['status'] == 3){
+                            # declined booking
+                            echo "tbd";
+                        } else if($notif['status'] == 4){
+                            # canceled booking
+                            echo "tbd";
+                        } else if($notif['status'] == 5){
+                            # expired booking
+                            echo "tbd";
+                        }
+                        
+                        echo "</div>";
+                        echo "<div class='time'>";
+                        echo "test";
+                        echo "</div>";
+                        echo "</div>";
+                    } else {
+                        break;
+                    }
+                }
+                echo "</div>";
+            ?>
             <div class="dropdown_popup" id="dropdown_elements">
                 <div>
                     <a href="AccountProfile.php">Profile</a>

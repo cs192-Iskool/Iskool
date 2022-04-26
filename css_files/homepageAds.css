@@ -84,9 +84,20 @@
 }
 
 .book_btn {
-    padding-top: 15px;
+    padding-top: 5px;
     width: 135px;
     float: left;
+}
+
+.book {
+    background-color: maroon;
+    border: none;
+    border-radius: 10px;
+    width: 70px;
+    height: 35px;
+    color: white;
+    cursor: pointer;
+    font-size: medium;
 }
 
 .reviews {
@@ -121,4 +132,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     max-height: 700px;
+}
+
+.disable {
+    background-color: #bebebe;
+    pointer-events: none;
 }

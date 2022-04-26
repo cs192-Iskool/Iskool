@@ -9,13 +9,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iskool</title>
-    <link rel = "stylesheet" href = "css_files/homepage.css" />
-    <link rel = "stylesheet" href = "css_files/header.css">
     <link rel = "stylesheet" href = "css_files/homepageAds.css">
-    
+    <link rel = "stylesheet" href = "css_files/homepage.css">
+    <link rel = "stylesheet" href = "css_files/header.css">
+    <script src = "js_files/homepage.js"></script>
+    <script src = "js_files/header.js"></script>
 </head>
-<script src = "js_files/homepage.js"></script>
-<script src = "js_files/header.js"></script>
 <body>
     <div class="top">
         <div class="home">
@@ -29,7 +28,7 @@
                     echo "<button type='button' class='header_links'><a href='MyAds.php'>My Ads</a></button>";
                     echo "<button type='button' class='header_links'>Bookings</button>";
                     echo "<button type='button' class='header_links'>Messages</button>";
-                    echo "<button type='button' class='header_links'>(notif)</button>";
+                    echo "<button type='button' class='header_links' id='notifs_list' onclick='show_notifs()'>(notif)</button>";
                     echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'];
                     if($_SESSION['profPic']) {
                         echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
@@ -43,6 +42,44 @@
                 }
             ?>
         </div>
+        <?php
+            if (isset($_SESSION["userID"])) {
+                echo "<div class='notif_panel' id='notifs'>";
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." ORDER BY timeCreated DESC;";
+                $notifsList = mysqli_query($conn, $getNotifs);
+                for($i = 0; $i < 6; $i++) {
+                    if($notif = mysqli_fetch_assoc($notifsList)){
+                        echo "<div class='notif'>";
+                        echo "<div class='notif_message'>";
+                        if($notif['status'] == 1){
+                            # new booking
+                            echo "You have received a booking request from (name) for ".$notif['subject'].".";
+                        } else if($notif['status'] == 2){
+                            # accepted booking
+                            echo "tbd";
+                        } else if($notif['status'] == 3){
+                            # declined booking
+                            echo "tbd";
+                        } else if($notif['status'] == 4){
+                            # canceled booking
+                            echo "tbd";
+                        } else if($notif['status'] == 5){
+                            # expired booking
+                            echo "tbd";
+                        }
+                        
+                        echo "</div>";
+                        echo "<div class='time'>";
+                        echo "test";
+                        echo "</div>";
+                        echo "</div>";
+                    } else {
+                        break;
+                    }
+                }
+                echo "</div>";
+            }
+        ?>
         <div class="dropdown_popup" id="dropdown_elements">
             <div>
                 <a href="AccountProfile.php">Profile</a>
@@ -139,10 +176,22 @@
                 echo '<div class="price">';
                 echo ''.$row["price"].'/hr';
                 echo '</div>';
-                if (isset($_SESSION['userID'])) {
+                if (isset($_SESSION['userID']) && $row["userID"] != $_SESSION['userID']) {
+                    echo '<form action="php_db_files/createBooking.php" method="POST">';
+                    $query = "SELECT * FROM bookings WHERE tuteeID=".$_SESSION['userID']." AND tutorID=".$row["userID"]." AND subject='".$row["subject"]."';";
+                    $check = mysqli_query($conn, $query);
+                    echo '<input style="display:none" type="number" name="ad" value="'.$row["adID"].'" required>';
                     echo '<div class="book_btn">';
-                    echo '<button>Book</button>';
+                    $query2 = "SELECT firstName, lastName FROM userinfo WHERE userID=".$row['userID'].";";
+                    $getName = mysqli_query($conn, $query2);
+                    $name = mysqli_fetch_assoc($getName);
+                    if($bookingExists = mysqli_fetch_assoc($check)) {
+                        echo '<button class="book disable" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, "'.$row["subject"].'", "'.$name["firstName"].'", "'.$name["lastName"].'")">Book</button>';
+                    } else {
+                        echo '<button class="book" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, &quot;'.$row["subject"].'&quot;, &quot;'.$name["firstName"].'&quot;, &quot;'.$name["lastName"].'&quot;)">Book</button>';
+                    }
                     echo '</div>';
+                    echo '</form>';
                 }
                 echo '<div class="reviews">';
                 echo '<a href="#">Reviews<a>';

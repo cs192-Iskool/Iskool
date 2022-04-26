@@ -29,11 +29,57 @@
     background-color: maroon;
     color: white;
     font-size: medium;
+    cursor: pointer;
 }
 
 .header_links a {
     text-decoration: none;
     color: white;
+}
+
+.notif_panel {
+    display: none;
+    border: 1px solid #bbbbbb;
+    background-color: #dddddd;
+    height: 500px;
+    width: 300px;
+    position: absolute;
+    top: 62px;
+    left: 70%;
+    z-index: 5;
+    flex-direction: column;
+}
+
+.notif {
+    display: flex;
+    position: relative;
+    background-color: #d4e4ff;
+    border: 1px solid #bbbbbb;
+    height: 80px;
+    width: 300px;
+    left: -1px;
+    align-items: center;
+}
+
+.notif_message {
+    display: flex;
+    background-color: #d4e4ff;
+    border-bottom: 1px solid #bbbbbb;
+    height: 80px;
+    width: 240px;
+    padding-left: 15px;
+    padding-right: 10px;
+    align-items: center;
+}
+
+.time {
+    display: flex;
+    background-color: #d4e4ff;
+    border-bottom: 1px solid #bbbbbb;
+    height: 80px;
+    width: 50px;
+    align-items: flex-end;
+    font-size: small;
 }
 
 #dropdown {
