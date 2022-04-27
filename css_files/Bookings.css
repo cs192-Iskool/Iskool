@@ -1,0 +1,140 @@
+body {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+}
+
+.whitespace {
+    padding-left: 5%;
+    height: 100px;
+    z-index: 1;
+}
+
+.label {
+    position: relative;
+    top: 35%;
+    transform: translate(0%, -50%);
+}
+
+.sidebar {
+    padding-top: 20px;
+    width: 10%;
+}
+
+.sidebar_navigate {
+    width: 50%;
+    left: 50%;
+    position: relative;
+    transform: translate(-50%);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar_navigate div {
+    padding: 10px;
+}
+
+.sidebar_navigate a {
+    text-decoration: none;
+    color: black;
+}
+
+.main {
+    display: flex;
+    min-height: 620px;
+}
+
+.info_box {
+    display: flex;
+    flex-direction: column;
+    border-left: 3px solid black;
+    padding-top: 75px;
+    padding-left: 100px;
+    width: 80%;
+    min-height: 620px;
+}
+
+.all_info {
+    display: flex;
+    flex-direction: row;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding-left: 30px;
+    margin-bottom: 30px;
+    width: 80%;
+    height: 100px;
+}
+
+.info_left {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    width: 60%;
+}
+
+.info_prof_pic {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.info_message {
+    font-size: larger;
+    padding-left: 30px;
+}
+
+.info_time {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    width: 10%;
+    font-size: smaller;
+}
+
+.booking_buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    height: 100px;
+    width: 30%;
+}
+
+.booking_cancelbtn {
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    padding: 15px;
+    margin-right: 15px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.booking_acceptbtn {
+    background-color: #00ff10;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    padding: 15px;
+    margin-right: 15px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.booking_rejectbtn {
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    padding: 15px;
+    margin-right: 15px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.notif_status {
+    font-size: 16px;
+}
