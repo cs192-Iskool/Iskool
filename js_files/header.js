@@ -29,4 +29,22 @@ window.onclick = function(event){
             }
         }
     }
+    if(event.target.id != "campus" && event.target.id != "campusFilter"){
+        var dropdown_popup = document.getElementById("campus");
+        if(dropdown_popup.classList.contains("disp")){
+            dropdown_popup.classList.remove("disp");
+        }
+    }
+    if(event.target.id != "college" && event.target.id != "collegeFilter"){
+        var dropdown_popup = document.getElementById("college");
+        if(dropdown_popup.classList.contains("disp")){
+            dropdown_popup.classList.remove("disp");
+        }
+    }
+    if(event.target.id != "price" && event.target.id != "priceFilter"){
+        var dropdown_popup = document.getElementById("price");
+        if(dropdown_popup.classList.contains("disp")){
+            dropdown_popup.classList.remove("disp");
+        }
+    }
 }

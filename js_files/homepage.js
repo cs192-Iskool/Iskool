@@ -29,3 +29,15 @@ function show_thumbnail(id) {
       pic.style.display = "none";
 })
 }
+
+function showCampus(){
+  document.getElementById("campus").classList.toggle("disp");
+}
+
+function showCollege(){
+  document.getElementById("college").classList.toggle("disp");
+}
+
+function showPrice(){
+  document.getElementById("price").classList.toggle("disp");
+}
