@@ -30,7 +30,6 @@
     $_SESSION["search"] = "";
     $_SESSION["filters"] = 0;
     $_SESSION["campusFilter"] = "";
-    $_SESSION["collegeFilter"] = "";
     $_SESSION["minPriceFilter"] = "";
     $_SESSION["maxPriceFilter"] = "";
 
