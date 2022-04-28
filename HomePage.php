@@ -26,7 +26,7 @@
             <?php
                 if (isset($_SESSION["userID"])) {
                     echo "<button type='button' class='header_links'><a href='MyAds.php'>My Ads</a></button>";
-                    echo "<button type='button' class='header_links'>Bookings</button>";
+                    echo "<button type='button' class='header_links'><a href='Bookings.php'>Bookings</a></button>";
                     echo "<button type='button' class='header_links'>Messages</button>";
                     echo "<button type='button' class='header_links' id='notifs_list' onclick='show_notifs()'>(notif)</button>";
                     echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'];
@@ -49,11 +49,15 @@
                 $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
+                        echo "<a style='color: #000000; text-decoration: none;' href='PastBookings.php'>";
                         echo "<div class='notif'>";
                         echo "<div class='notif_message'>";
                         if($notif['status'] == 1){
                             # new booking
-                            echo "You have received a booking request from (name) for ".$notif['subject'].".";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo "You have received a booking request from ".$name['firstName']." ".$name['lastName']." for ".$notif['subject'].".";
                         } else if($notif['status'] == 2){
                             # accepted booking
                             echo "tbd";
@@ -67,12 +71,12 @@
                             # expired booking
                             echo "tbd";
                         }
-                        
                         echo "</div>";
                         echo "<div class='time'>";
-                        echo "test";
+                        echo substr($notif["timeCreated"], 11, 5);
                         echo "</div>";
                         echo "</div>";
+                        echo "</a>";
                     } else {
                         break;
                     }

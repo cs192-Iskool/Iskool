@@ -5,6 +5,9 @@
     if (!isset($_SESSION["userID"])) {
         header("location: Login.html");
     }
+
+    $bookings = "SELECT * FROM bookings WHERE tutorID = '".$_SESSION["userID"]."' OR tuteeID = '".$_SESSION["userID"]."' ORDER BY timeCreated DESC;";
+    $result = mysqli_query($conn, $bookings);
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +16,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>My Ads - Iskool</title>
-        <link rel="stylesheet" type="text/css" href="css_files/MyAds.css">
+        <link rel="stylesheet" type="text/css" href="css_files/Bookings.css">
         <link rel="stylesheet" href="css_files/header.css">
         <script defer src="js_files/header.js"></script>
     </head>
@@ -47,7 +50,6 @@
                 $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
-                        echo "<a style='color: #000000; text-decoration: none;' href='PastBookings.php'>";
                         echo "<div class='notif'>";
                         echo "<div class='notif_message'>";
                         if($notif['status'] == 1){
@@ -69,12 +71,12 @@
                             # expired booking
                             echo "tbd";
                         }
+                        
                         echo "</div>";
                         echo "<div class='time'>";
                         echo substr($notif["timeCreated"], 11, 5);
                         echo "</div>";
                         echo "</div>";
-                        echo "</a>";
                     } else {
                         break;
                     }
@@ -93,56 +95,70 @@
         </div>
         <div class="horizontal"></div>
         <div class="whitespace">
-            <h1 class="label">My Ads</h1>
+            <h1 class="label">Bookings</h1>
         </div>
         <div class="horizontal"></div>
         <div class="main">
             <div class="sidebar">
-                <div class="sidebar_navigate" style="width: 70%;">
-                    <div style="text-align: center;">
-                        <a href="#">Create Ads</a>
+                <div class="sidebar_navigate">
+                    <div>
+                        <a href="MyAds.php">Active Ads</a>
+                    </div>
+                    <div>
+                        <a href="Bookings.php">Awaiting Response</a>
+                    </div>
+                    <div>
+                        <a href="PastBookings.php">Past Bookings</a>
                     </div>
                 </div>
             </div>
-            <form class="info_box" action="php_db_files/CreateAds.php" method="POST" enctype="multipart/form-data">
-                <div class="all_info">
-                    <h1>Basic Info</h1>
-                    <table>
-                        <tr>
-                            <td>Subject:</td>
-                            <td><input type="text" name="subject" id="subject" required></td><!--value="php script"-->
-                        </tr>
-                        <tr>
-                            <td>Price:</td>
-                            <td>
-                                <span>
-                                    <input type="number" name="price" id="price" min="1" required><!--value="php script"-->
-                                </span>
-                                <span>per hour</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div style="height: 50px;"></div>
-                <div class="all_info">
-                    <h1>Gallery</h1>
-                    <table>
-                        <tr>
-                            <td>
-                                You can upload a photo promoting your service. This can be used as a thumbnail for your ad.
-                            </td>
-                        </tr>
-                    </table>
-                    <input type="file" name="file"> <br><br>
-                </div>
-                <div style="height: 50px;"></div>
-                <div class="all_info" style="border-color: white;">
-                    <button type="submit">Confirm</button>
-                    <a href="MyAds.php">
-                        <button type="button" style="float: right;  margin-right: 30px;">Cancel</button>
-                    </a>
-                </div>
-            </form>
+            <div class="info_box">
+                <?php
+                    while($book = mysqli_fetch_assoc($result)) {
+                        echo '<div class="all_info">';
+                        if($book["tuteeID"] == $_SESSION["userID"]) {
+                            $getTutor = "SELECT userID, firstName, profPic FROM userinfo WHERE userID = '".$book["tutorID"]."';";
+                            $query = mysqli_query($conn, $getTutor);
+                            $pic = mysqli_fetch_assoc($query);
+                            echo '<div class="info_left">';
+                            if($pic['profPic']) {
+                                echo "<img class='info_prof_pic' src='profile_pictures/" . $pic['userID'] . ".jpg?'" .  mt_rand() . " alt='Tutor profile picture.'>";
+                            } else {
+                                echo "<img class='info_prof_pic' src='images/profpic.jpg' alt='Tutor profile picture.'>";
+                            }
+                            echo '<div class="info_message">You have booked <b>'.$pic["firstName"].'</b>\'s service for <b>'.$book["subject"].'</b>.</div>';
+                            echo '</div>';
+                            echo '<div class="info_time">';
+                            echo substr($book["timeCreated"], 0, 16);
+                            echo '</div>';
+                            echo '<div class="booking_buttons">';
+                            echo '<button class="booking_cancelbtn">Cancel</button>';
+                            echo '</div>';
+                        } else {
+                            $getTutee = "SELECT userID, firstName, profPic FROM userinfo WHERE userID = '".$book["tuteeID"]."';";
+                            $query = mysqli_query($conn, $getTutee);
+                            $pic = mysqli_fetch_assoc($query);
+                            echo '<div class="info_left">';
+                            if($pic['profPic']) {
+                                echo "<img class='info_prof_pic' src='profile_pictures/" . $pic['userID'] . ".jpg?'" .  mt_rand() . " alt='Tutor profile picture.'>";
+                            } else {
+                                echo "<img class='info_prof_pic' src='images/profpic.jpg' alt='Tutor profile picture.'>";
+                            }
+                            echo '<div class="info_message"><b>'.$pic["firstName"].'</b> has booked your service for <b>'.$book["subject"].'</b>.</div>';
+                            echo '</div>';
+                            echo '<div class="info_time">';
+                            echo substr($book["timeCreated"], 0, 16);
+                            echo '</div>';
+                            echo '<div class="booking_buttons">';
+                            echo '<button class="booking_rejectbtn">Reject</button>';
+                            echo '<button class="booking_acceptbtn">Accept</button>';
+                            echo '</div>';
+                        }
+                        echo '</div>';
+                    }
+                ?>
+            </div>
+            
         </div>
         
     </body>
