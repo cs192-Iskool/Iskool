@@ -194,6 +194,7 @@
             }
             $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
             $result = mysqli_query($conn, $user);
+            $ctr = 0;
             while($row = mysqli_fetch_assoc($result)) {
                 if(($_SESSION["filters"] == 0) || ($row["campus"] == $_SESSION["campusFilter"]) || (($row["price"] >= $_SESSION["minPriceFilter"]) && ($row["price"] < $_SESSION["maxPriceFilter"]))) {
                     echo '<div class="ads">';
@@ -248,13 +249,18 @@
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
+                    $ctr += 1;
                 }
+            }
+            if(mysqli_num_rows($result) == 0 || $ctr == 0) {
+                echo 'No ads have been found.';
             }
             $_SESSION['search'] = "";
             $_SESSION['filters'] = 0;
             $_SESSION['campusFilter'] = "";
             $_SESSION['minPriceFilter'] = "";
             $_SESSION['maxPriceFilter'] = "";
+            $ctr = 0;
         ?>
     </div>
     <div id="pic_overlay"></div>
