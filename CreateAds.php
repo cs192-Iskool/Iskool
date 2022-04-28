@@ -43,7 +43,8 @@
             </div>
             <?php
                 echo "<div class='notif_panel' id='notifs'>";
-                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5)ORDER BY timeCreated DESC;";                $notifsList = mysqli_query($conn, $getNotifs);
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5)ORDER BY timeCreated DESC;";
+                $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
                         if($notif['status'] == 1){
