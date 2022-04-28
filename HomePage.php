@@ -114,13 +114,6 @@
                     <a href = "php_db_files/filterAds.php?campus=8">UP Cebu</a>
                 </div>
             </li>
-            <li class = "menubar__item" id="collegeFilter" onclick="showCollege()">College
-                <div class = "menubar__toggle" id = "college">
-                    <a href = "#">College 1</a>
-                    <a href = "#">College 2</a>
-                    <a href = "#">College 3</a>
-                </div>
-            </li>
             <li class = "menubar__item" id="priceFilter" onclick="showPrice()">Price
                 <div class = "menubar__toggle" id = "price">
                     <a href = "php_db_files/filterAds.php?price=1">< 200</a>
@@ -156,6 +149,7 @@
             }
             $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
             $result = mysqli_query($conn, $user);
+            $ctr = 0;
             while($row = mysqli_fetch_assoc($result)) {
                 if(($_SESSION["filters"] == 0) || ($row["campus"] == $_SESSION["campusFilter"]) || (($row["price"] >= $_SESSION["minPriceFilter"]) && ($row["price"] < $_SESSION["maxPriceFilter"]))) {
                     echo '<div class="ads">';
@@ -210,13 +204,18 @@
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
+                    $ctr += 1;
                 }
+            }
+            if(mysqli_num_rows($result) == 0 || $ctr == 0) {
+                echo 'No ads have been found.';
             }
             $_SESSION['search'] = "";
             $_SESSION['filters'] = 0;
             $_SESSION['campusFilter'] = "";
             $_SESSION['minPriceFilter'] = "";
             $_SESSION['maxPriceFilter'] = "";
+            $ctr = 0;
         ?>
     </div>
     <div id="pic_overlay"></div>
