@@ -28,6 +28,10 @@
     $_SESSION["password"] = $id["password"];
     $_SESSION["profPic"] = $id["profPic"];
     $_SESSION["search"] = "";
+    $_SESSION["filters"] = 0;
+    $_SESSION["campusFilter"] = "";
+    $_SESSION["minPriceFilter"] = "";
+    $_SESSION["maxPriceFilter"] = "";
 
     header("location: ../HomePage.php");
     exit();
