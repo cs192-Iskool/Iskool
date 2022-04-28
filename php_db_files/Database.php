@@ -13,7 +13,7 @@ try {
   session_start();
   session_unset();
   session_destroy();
-  echo 'window.location.href = "http://localhost/Iskool/Login.html";';
+  echo 'window.location.href = "../Login.html";';
   echo '</script>'; 
   exit;
 }

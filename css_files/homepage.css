@@ -29,6 +29,7 @@
     width: 100%;
     border: 15px black; 
 }
+
 .menubar__item{
     display: flex;
     height: 10px;
@@ -41,6 +42,28 @@
     margin:  20px;
     padding: 25px;
     border: 2px solid grey;
+    cursor: pointer;
+}
+
+.menubar__toggle{
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 62px;
+    background-color: #f1f1f1;
+    min-width: 100%;
+    z-index: 1;
+}
+
+.menubar__toggle a{
+    color: black;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.menubar__toggle a:hover{
+    background-color: #ddd;
 }
 
 .sort{
