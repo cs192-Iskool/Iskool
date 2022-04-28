@@ -147,7 +147,7 @@
 
     <div class = "menubar">
         <ul class = "menubar__container">
-        <li class = "menubar__item" id="campusFilter" onclick="showCampus()">Campus
+            <li class = "menubar__item" id="campusFilter" onclick="showCampus()">Campus
                 <div class = "menubar__toggle" id = "campus">
                     <a href = "php_db_files/filterAds.php?campus=1">UP Diliman</a>
                     <a href = "php_db_files/filterAds.php?campus=2">UP Los Baños</a>
@@ -157,13 +157,6 @@
                     <a href = "php_db_files/filterAds.php?campus=6">UP Mindanao</a>
                     <a href = "php_db_files/filterAds.php?campus=7">UP Baguio</a>
                     <a href = "php_db_files/filterAds.php?campus=8">UP Cebu</a>
-                </div>
-            </li>
-            <li class = "menubar__item" id="collegeFilter" onclick="showCollege()">College
-                <div class = "menubar__toggle" id = "college">
-                    <a href = "#">College 1</a>
-                    <a href = "#">College 2</a>
-                    <a href = "#">College 3</a>
                 </div>
             </li>
             <li class = "menubar__item" id="priceFilter" onclick="showPrice()">Price
