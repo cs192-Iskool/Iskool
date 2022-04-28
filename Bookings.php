@@ -46,10 +46,14 @@
             </div>
             <?php
                 echo "<div class='notif_panel' id='notifs'>";
-                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." ORDER BY timeCreated DESC;";
-                $notifsList = mysqli_query($conn, $getNotifs);
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5)ORDER BY timeCreated DESC;";                $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
+                        if($notif['status'] == 1){
+                            echo "<a style='color: #000000; text-decoration: none;' href='Bookings.php'>";
+                        } else {
+                            echo "<a style='color: #000000; text-decoration: none;' href='PastBookings.php'>";
+                        }
                         echo "<div class='notif'>";
                         echo "<div class='notif_message'>";
                         if($notif['status'] == 1){
@@ -63,20 +67,33 @@
                             echo "tbd";
                         } else if($notif['status'] == 3){
                             # declined booking
-                            echo "tbd";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo $name['firstName']." ".$name['lastName']." has rejected your booking request for ".$notif['subject'].".";
                         } else if($notif['status'] == 4){
                             # canceled booking
                             echo "tbd";
                         } else if($notif['status'] == 5){
                             # expired booking
-                            echo "tbd";
+                            if($notif['sourceUserID'] == $_SESSION['userID']) {
+                                $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['targetUserID'].";";
+                                $query = mysqli_query($conn, $getName);
+                                $name = mysqli_fetch_assoc($query);
+                                echo "Your booking request for ".$name['firstName']." ".$name['lastName']." for ".$notif['subject']." has expired.";
+                            } else {
+                                $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                                $query = mysqli_query($conn, $getName);
+                                $name = mysqli_fetch_assoc($query);
+                                echo "A booking request from ".$name['firstName']." ".$name['lastName']." for your services for ".$notif['subject']." has expired.";
+                            }
                         }
-                        
                         echo "</div>";
                         echo "<div class='time'>";
                         echo substr($notif["timeCreated"], 11, 5);
                         echo "</div>";
                         echo "</div>";
+                        echo "</a>";
                     } else {
                         break;
                     }
@@ -114,47 +131,56 @@
             </div>
             <div class="info_box">
                 <?php
-                    while($book = mysqli_fetch_assoc($result)) {
-                        echo '<div class="all_info">';
-                        if($book["tuteeID"] == $_SESSION["userID"]) {
-                            $getTutor = "SELECT userID, firstName, profPic FROM userinfo WHERE userID = '".$book["tutorID"]."';";
-                            $query = mysqli_query($conn, $getTutor);
-                            $pic = mysqli_fetch_assoc($query);
-                            echo '<div class="info_left">';
-                            if($pic['profPic']) {
-                                echo "<img class='info_prof_pic' src='profile_pictures/" . $pic['userID'] . ".jpg?'" .  mt_rand() . " alt='Tutor profile picture.'>";
+                    $book = mysqli_fetch_assoc($result);
+                    if(!($book)) {
+                        echo '<div style="font-size: 40px;">You have no active bookings.</div>';
+                    } else {
+                        while($book) {
+                            echo '<div class="all_info">';
+                            if($book["tuteeID"] == $_SESSION["userID"]) {
+                                $getTutor = "SELECT userID, firstName, profPic FROM userinfo WHERE userID = '".$book["tutorID"]."';";
+                                $query = mysqli_query($conn, $getTutor);
+                                $pic = mysqli_fetch_assoc($query);
+                                echo '<div class="info_left">';
+                                if($pic['profPic']) {
+                                    echo "<img class='info_prof_pic' src='profile_pictures/" . $pic['userID'] . ".jpg?'" .  mt_rand() . " alt='Tutor profile picture.'>";
+                                } else {
+                                    echo "<img class='info_prof_pic' src='images/profpic.jpg' alt='Tutor profile picture.'>";
+                                }
+                                echo '<div class="info_message">You have booked <b>'.$pic["firstName"].'</b>\'s service for <b>'.$book["subject"].'</b>.</div>';
+                                echo '</div>';
+                                echo '<div class="info_time">';
+                                echo substr($book["timeCreated"], 0, 16);
+                                echo '</div>';
+                                echo '<div class="booking_buttons">';
+                                echo '<button class="booking_cancelbtn">Cancel</button>';
+                                echo '</div>';
                             } else {
-                                echo "<img class='info_prof_pic' src='images/profpic.jpg' alt='Tutor profile picture.'>";
+                                $getTutee = "SELECT userID, firstName, profPic FROM userinfo WHERE userID = '".$book["tuteeID"]."';";
+                                $query = mysqli_query($conn, $getTutee);
+                                $pic = mysqli_fetch_assoc($query);
+                                echo '<div class="info_left">';
+                                if($pic['profPic']) {
+                                    echo "<img class='info_prof_pic' src='profile_pictures/" . $pic['userID'] . ".jpg?'" .  mt_rand() . " alt='Tutor profile picture.'>";
+                                } else {
+                                    echo "<img class='info_prof_pic' src='images/profpic.jpg' alt='Tutor profile picture.'>";
+                                }
+                                echo '<div class="info_message"><b>'.$pic["firstName"].'</b> has booked your service for <b>'.$book["subject"].'</b>.</div>';
+                                echo '</div>';
+                                echo '<div class="info_time">';
+                                echo substr($book["timeCreated"], 0, 16);
+                                echo '</div>';
+                                echo '<div class="booking_buttons">';
+                                echo '<form action="php_db_files/Reject.php" method="POST">';
+                                echo '<input style="display:none" type="number" name="bookingID" value="'.$book["bookingID"].'" required>';
+                                echo '<button class="booking_rejectbtn">Reject</button>';
+                                echo '</form>';
+                                echo '<button class="booking_acceptbtn">Accept</button>';
+                                echo '</div>';
                             }
-                            echo '<div class="info_message">You have booked <b>'.$pic["firstName"].'</b>\'s service for <b>'.$book["subject"].'</b>.</div>';
                             echo '</div>';
-                            echo '<div class="info_time">';
-                            echo substr($book["timeCreated"], 0, 16);
-                            echo '</div>';
-                            echo '<div class="booking_buttons">';
-                            echo '<button class="booking_cancelbtn">Cancel</button>';
-                            echo '</div>';
-                        } else {
-                            $getTutee = "SELECT userID, firstName, profPic FROM userinfo WHERE userID = '".$book["tuteeID"]."';";
-                            $query = mysqli_query($conn, $getTutee);
-                            $pic = mysqli_fetch_assoc($query);
-                            echo '<div class="info_left">';
-                            if($pic['profPic']) {
-                                echo "<img class='info_prof_pic' src='profile_pictures/" . $pic['userID'] . ".jpg?'" .  mt_rand() . " alt='Tutor profile picture.'>";
-                            } else {
-                                echo "<img class='info_prof_pic' src='images/profpic.jpg' alt='Tutor profile picture.'>";
-                            }
-                            echo '<div class="info_message"><b>'.$pic["firstName"].'</b> has booked your service for <b>'.$book["subject"].'</b>.</div>';
-                            echo '</div>';
-                            echo '<div class="info_time">';
-                            echo substr($book["timeCreated"], 0, 16);
-                            echo '</div>';
-                            echo '<div class="booking_buttons">';
-                            echo '<button class="booking_rejectbtn">Reject</button>';
-                            echo '<button class="booking_acceptbtn">Accept</button>';
-                            echo '</div>';
+                            $book = mysqli_fetch_assoc($result);
                         }
-                        echo '</div>';
                     }
                 ?>
             </div>

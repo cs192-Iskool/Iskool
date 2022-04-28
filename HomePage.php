@@ -1,6 +1,34 @@
 <?php
     include_once 'php_db_files/Database.php';
     session_start();
+
+    if (isset($_SESSION["userID"])) {
+        date_default_timezone_set("Asia/Manila");
+        $getExpired = "SELECT bookingID, timeCreated FROM bookings WHERE tuteeID = '".$_SESSION["userID"]."';";
+        $result = mysqli_query($conn, $getExpired);
+        while($notif = mysqli_fetch_assoc($result)) {
+            $bookingInfo = $notif['bookingID'];
+            $expiryDate = new DateTime($notif['timeCreated']);
+            date_modify($expiryDate, "+1 minute");      # Change this to 3 days in final product
+            $expiryDate = $expiryDate->format('Y-m-d H:i:s');
+
+            if(date("Y-m-d H:i:s") >= $expiryDate) {
+                $deleteBooking = "DELETE FROM bookings WHERE bookingID = $bookingInfo";
+                $delete = mysqli_query($conn, $deleteBooking);
+
+                $getNotif = "SELECT * FROM notifs WHERE bookingID = $bookingInfo AND status = 1";
+                $query = mysqli_query($conn, $getNotif);
+                $notif2 = mysqli_fetch_assoc($query);
+                
+                $tUID = $notif2['targetUserID'];
+                $subject = $notif2['subject'];
+                $sUID = $notif2['sourceUserID'];
+
+                $expiryNotif = "INSERT INTO notifs (targetUserID, bookingID, status, subject, sourceUserID) VALUES ('$tUID', '$bookingInfo', '5', '$subject', '$sUID');";
+                $query = mysqli_query($conn, $expiryNotif);
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -45,11 +73,14 @@
         <?php
             if (isset($_SESSION["userID"])) {
                 echo "<div class='notif_panel' id='notifs'>";
-                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." ORDER BY timeCreated DESC;";
-                $notifsList = mysqli_query($conn, $getNotifs);
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5)ORDER BY timeCreated DESC;";                $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
-                        echo "<a style='color: #000000; text-decoration: none;' href='PastBookings.php'>";
+                        if($notif['status'] == 1){
+                            echo "<a style='color: #000000; text-decoration: none;' href='Bookings.php'>";
+                        } else {
+                            echo "<a style='color: #000000; text-decoration: none;' href='PastBookings.php'>";
+                        }
                         echo "<div class='notif'>";
                         echo "<div class='notif_message'>";
                         if($notif['status'] == 1){
@@ -63,13 +94,26 @@
                             echo "tbd";
                         } else if($notif['status'] == 3){
                             # declined booking
-                            echo "tbd";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo $name['firstName']." ".$name['lastName']." has rejected your booking request for ".$notif['subject'].".";
                         } else if($notif['status'] == 4){
                             # canceled booking
                             echo "tbd";
                         } else if($notif['status'] == 5){
                             # expired booking
-                            echo "tbd";
+                            if($notif['sourceUserID'] == $_SESSION['userID']) {
+                                $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['targetUserID'].";";
+                                $query = mysqli_query($conn, $getName);
+                                $name = mysqli_fetch_assoc($query);
+                                echo "Your booking request for ".$name['firstName']." ".$name['lastName']." for ".$notif['subject']." has expired.";
+                            } else {
+                                $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                                $query = mysqli_query($conn, $getName);
+                                $name = mysqli_fetch_assoc($query);
+                                echo "A booking request from ".$name['firstName']." ".$name['lastName']." for your services for ".$notif['subject']." has expired.";
+                            }
                         }
                         echo "</div>";
                         echo "<div class='time'>";
@@ -102,7 +146,7 @@
 
     <div class = "menubar">
         <ul class = "menubar__container">
-            <li class = "menubar__item" id="campusFilter" onclick="showCampus()">Campus
+        <li class = "menubar__item" id="campusFilter" onclick="showCampus()">Campus
                 <div class = "menubar__toggle" id = "campus">
                     <a href = "php_db_files/filterAds.php?campus=1">UP Diliman</a>
                     <a href = "php_db_files/filterAds.php?campus=2">UP Los Baños</a>
@@ -112,6 +156,13 @@
                     <a href = "php_db_files/filterAds.php?campus=6">UP Mindanao</a>
                     <a href = "php_db_files/filterAds.php?campus=7">UP Baguio</a>
                     <a href = "php_db_files/filterAds.php?campus=8">UP Cebu</a>
+                </div>
+            </li>
+            <li class = "menubar__item" id="collegeFilter" onclick="showCollege()">College
+                <div class = "menubar__toggle" id = "college">
+                    <a href = "#">College 1</a>
+                    <a href = "#">College 2</a>
+                    <a href = "#">College 3</a>
                 </div>
             </li>
             <li class = "menubar__item" id="priceFilter" onclick="showPrice()">Price
@@ -149,7 +200,6 @@
             }
             $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
             $result = mysqli_query($conn, $user);
-            $ctr = 0;
             while($row = mysqli_fetch_assoc($result)) {
                 if(($_SESSION["filters"] == 0) || ($row["campus"] == $_SESSION["campusFilter"]) || (($row["price"] >= $_SESSION["minPriceFilter"]) && ($row["price"] < $_SESSION["maxPriceFilter"]))) {
                     echo '<div class="ads">';
@@ -204,18 +254,13 @@
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
-                    $ctr += 1;
                 }
-            }
-            if(mysqli_num_rows($result) == 0 || $ctr == 0) {
-                echo 'No ads have been found.';
             }
             $_SESSION['search'] = "";
             $_SESSION['filters'] = 0;
             $_SESSION['campusFilter'] = "";
             $_SESSION['minPriceFilter'] = "";
             $_SESSION['maxPriceFilter'] = "";
-            $ctr = 0;
         ?>
     </div>
     <div id="pic_overlay"></div>
