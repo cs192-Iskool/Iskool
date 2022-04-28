@@ -102,25 +102,31 @@
 
     <div class = "menubar">
         <ul class = "menubar__container">
-            <li class = "menubar__item">Campus
+            <li class = "menubar__item" id="campusFilter" onclick="showCampus()">Campus
                 <div class = "menubar__toggle" id = "campus">
-                    <span class = "bar"></span>
-                    <span class = "bar"></span>
-                    <span class = "bar"></span>
+                    <a href = "php_db_files/filterAds.php?campus=1">UP Diliman</a>
+                    <a href = "php_db_files/filterAds.php?campus=2">UP Los Baños</a>
+                    <a href = "php_db_files/filterAds.php?campus=3">UP Manila</a>
+                    <a href = "php_db_files/filterAds.php?campus=4">UP Visayas</a>
+                    <a href = "php_db_files/filterAds.php?campus=5">UP Open University</a>
+                    <a href = "php_db_files/filterAds.php?campus=6">UP Mindanao</a>
+                    <a href = "php_db_files/filterAds.php?campus=7">UP Baguio</a>
+                    <a href = "php_db_files/filterAds.php?campus=8">UP Cebu</a>
                 </div>
             </li>
-            <li class = "menubar__item">College
-                <div class = "menubar__toggle" id = "campus">
-                    <span class = "bar"></span>
-                    <span class = "bar"></span>
-                    <span class = "bar"></span>
+            <li class = "menubar__item" id="collegeFilter" onclick="showCollege()">College
+                <div class = "menubar__toggle" id = "college">
+                    <a href = "#">College 1</a>
+                    <a href = "#">College 2</a>
+                    <a href = "#">College 3</a>
                 </div>
             </li>
-            <li class = "menubar__item">Price
-                <div class = "menubar__toggle" id = "campus">
-                    <span class = "bar"></span>
-                    <span class = "bar"></span>
-                    <span class = "bar"></span>
+            <li class = "menubar__item" id="priceFilter" onclick="showPrice()">Price
+                <div class = "menubar__toggle" id = "price">
+                    <a href = "php_db_files/filterAds.php?price=1">< 200</a>
+                    <a href = "php_db_files/filterAds.php?price=2">200-599</a>
+                    <a href = "php_db_files/filterAds.php?price=3">600-999</a>
+                    <a href = "php_db_files/filterAds.php?price=4">> 1000</a>
                 </div>
             </li>
         </ul>
@@ -144,66 +150,73 @@
     </div>
     <div style="display: flex; flex-wrap: wrap;" class="ads_display">
         <?php
-            if (!(isset($_SESSION['userID'])) && !(isset($_SESSION['search']))) {
+            if (!(isset($_SESSION['userID'])) && !(isset($_SESSION['search'])) && !(isset($_SESSION['filters']))) {
                 $_SESSION['search'] = "";
+                $_SESSION['filters'] = 0;
             }
             $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
             $result = mysqli_query($conn, $user);
             while($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="ads">';
-                echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
-                if($row['image'] === NULL) {
-                    echo '<img id="img_'.$row["adID"].'" onclick="show_thumbnail(this.id)" style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
-                } else {
-                    echo '<img id="img_'.$row["adID"].'" onclick="show_thumbnail(this.id)" style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
-                }
-                echo '</div>';
-                echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
-                echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
-                echo '<div class="primary_info">';
-                echo ''.$row["firstName"].'';
-                echo '</div>';
-                echo '<div class="secondary_info">';
-                echo '<div class="course">';
-                echo ''.$row["course"].'';
-                echo '</div>';
-                echo '<div class="campus">';
-                echo ''.$row["campus"].'';
-                echo '</div>';
-                echo '</div>';
-                echo '<div class="ratings">';
-                echo '(This is where the ratings will go)';
-                echo '</div>';
-                echo '<div class="subject">';
-                echo ''.$row["subject"].'';
-                echo '</div>';
-                echo '<div class="price">';
-                echo ''.$row["price"].'/hr';
-                echo '</div>';
-                if (isset($_SESSION['userID']) && $row["userID"] != $_SESSION['userID']) {
-                    echo '<form action="php_db_files/createBooking.php" method="POST">';
-                    $query = "SELECT * FROM bookings WHERE tuteeID=".$_SESSION['userID']." AND tutorID=".$row["userID"]." AND subject='".$row["subject"]."';";
-                    $check = mysqli_query($conn, $query);
-                    echo '<input style="display:none" type="number" name="ad" value="'.$row["adID"].'" required>';
-                    echo '<div class="book_btn">';
-                    $query2 = "SELECT firstName, lastName FROM userinfo WHERE userID=".$row['userID'].";";
-                    $getName = mysqli_query($conn, $query2);
-                    $name = mysqli_fetch_assoc($getName);
-                    if($bookingExists = mysqli_fetch_assoc($check)) {
-                        echo '<button class="book disable" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, "'.$row["subject"].'", "'.$name["firstName"].'", "'.$name["lastName"].'")">Book</button>';
+                if(($_SESSION["filters"] == 0) || ($row["campus"] == $_SESSION["campusFilter"]) || (($row["price"] >= $_SESSION["minPriceFilter"]) && ($row["price"] < $_SESSION["maxPriceFilter"]))) {
+                    echo '<div class="ads">';
+                    echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
+                    if($row['image'] === NULL) {
+                        echo '<img id="img_'.$row["adID"].'" onclick="show_thumbnail(this.id)" style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
                     } else {
-                        echo '<button class="book" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, &quot;'.$row["subject"].'&quot;, &quot;'.$name["firstName"].'&quot;, &quot;'.$name["lastName"].'&quot;)">Book</button>';
+                        echo '<img id="img_'.$row["adID"].'" onclick="show_thumbnail(this.id)" style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
                     }
                     echo '</div>';
-                    echo '</form>';
+                    echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
+                    echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
+                    echo '<div class="primary_info">';
+                    echo ''.$row["firstName"].'';
+                    echo '</div>';
+                    echo '<div class="secondary_info">';
+                    echo '<div class="course">';
+                    echo ''.$row["course"].'';
+                    echo '</div>';
+                    echo '<div class="campus">';
+                    echo ''.$row["campus"].'';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<div class="ratings">';
+                    echo '(This is where the ratings will go)';
+                    echo '</div>';
+                    echo '<div class="subject">';
+                    echo ''.$row["subject"].'';
+                    echo '</div>';
+                    echo '<div class="price">';
+                    echo ''.$row["price"].'/hr';
+                    echo '</div>';
+                    if (isset($_SESSION['userID']) && $row["userID"] != $_SESSION['userID']) {
+                        echo '<form action="php_db_files/createBooking.php" method="POST">';
+                        $query = "SELECT * FROM bookings WHERE tuteeID=".$_SESSION['userID']." AND tutorID=".$row["userID"]." AND subject='".$row["subject"]."';";
+                        $check = mysqli_query($conn, $query);
+                        echo '<input style="display:none" type="number" name="ad" value="'.$row["adID"].'" required>';
+                        echo '<div class="book_btn">';
+                        $query2 = "SELECT firstName, lastName FROM userinfo WHERE userID=".$row['userID'].";";
+                        $getName = mysqli_query($conn, $query2);
+                        $name = mysqli_fetch_assoc($getName);
+                        if($bookingExists = mysqli_fetch_assoc($check)) {
+                            echo '<button class="book disable" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, "'.$row["subject"].'", "'.$name["firstName"].'", "'.$name["lastName"].'")">Book</button>';
+                        } else {
+                            echo '<button class="book" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, &quot;'.$row["subject"].'&quot;, &quot;'.$name["firstName"].'&quot;, &quot;'.$name["lastName"].'&quot;)">Book</button>';
+                        }
+                        echo '</div>';
+                        echo '</form>';
+                    }
+                    echo '<div class="reviews">';
+                    echo '<a href="#">Reviews<a>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
                 }
-                echo '<div class="reviews">';
-                echo '<a href="#">Reviews<a>';
-                echo '</div>';
-                echo '</div>';
-                echo '</div>';
             }
             $_SESSION['search'] = "";
+            $_SESSION['filters'] = 0;
+            $_SESSION['campusFilter'] = "";
+            $_SESSION['minPriceFilter'] = "";
+            $_SESSION['maxPriceFilter'] = "";
         ?>
     </div>
     <div id="pic_overlay"></div>
