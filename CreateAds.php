@@ -21,7 +21,7 @@
         <div class="top">
             <div class="home">
                 <button class="header_links">
-                    <a href="HomePage.php">Iskool</a>
+                <a href="php_db_files/clearInputs.php">Iskool</a>
                 </button>
             </div>
             <div class="header_navigate">
@@ -43,11 +43,15 @@
             </div>
             <?php
                 echo "<div class='notif_panel' id='notifs'>";
-                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." ORDER BY timeCreated DESC;";
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5)ORDER BY timeCreated DESC;";
                 $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
-                        echo "<a style='color: #000000; text-decoration: none;' href='PastBookings.php'>";
+                        if($notif['status'] == 1){
+                            echo "<a style='color: #000000; text-decoration: none;' href='Bookings.php'>";
+                        } else {
+                            echo "<a style='color: #000000; text-decoration: none;' href='PastBookings.php'>";
+                        }
                         echo "<div class='notif'>";
                         echo "<div class='notif_message'>";
                         if($notif['status'] == 1){
@@ -61,13 +65,26 @@
                             echo "tbd";
                         } else if($notif['status'] == 3){
                             # declined booking
-                            echo "tbd";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo $name['firstName']." ".$name['lastName']." has rejected your booking request for ".$notif['subject'].".";
                         } else if($notif['status'] == 4){
                             # canceled booking
                             echo "tbd";
                         } else if($notif['status'] == 5){
                             # expired booking
-                            echo "tbd";
+                            if($notif['sourceUserID'] == $_SESSION['userID']) {
+                                $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['targetUserID'].";";
+                                $query = mysqli_query($conn, $getName);
+                                $name = mysqli_fetch_assoc($query);
+                                echo "Your booking request for ".$name['firstName']." ".$name['lastName']." for ".$notif['subject']." has expired.";
+                            } else {
+                                $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                                $query = mysqli_query($conn, $getName);
+                                $name = mysqli_fetch_assoc($query);
+                                echo "A booking request from ".$name['firstName']." ".$name['lastName']." for your services for ".$notif['subject']." has expired.";
+                            }
                         }
                         echo "</div>";
                         echo "<div class='time'>";
