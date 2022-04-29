@@ -21,7 +21,7 @@
         <div class="top">
             <div class="home">
                 <button class="header_links">
-                    <a href="HomePage.php">Iskool</a>
+                <a href="php_db_files/clearInputs.php">Iskool</a>
                 </button>
             </div>
             <div class="header_navigate">

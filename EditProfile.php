@@ -27,7 +27,7 @@
             </div>
             <div class="header_navigate">
                 <button class="header_links">
-                    <a href="MyAds.php">My Ads</a>
+                <a href="php_db_files/clearInputs.php">Iskool</a>
                 </button>
                 <button class="header_links" class="header_links"><a href='Bookings.php'>Bookings</a></button>
                 <button class="header_links" class="header_links">Messages</button>
