@@ -149,7 +149,7 @@
         <ul class = "menubar__container">
             <li class = "menubar__item" id="campusFilter" onclick="showCampus()">
                 <?php
-                    if($_SESSION["campusFilter"] == "" || !(isset($_SESSION["campusFilter"]))) {
+                    if(!(isset($_SESSION["campusFilter"])) || ($_SESSION["campusFilter"] == "")) {
                         echo 'Campus';
                     } else {
                         echo $_SESSION['campusFilter'];
@@ -168,7 +168,7 @@
             </li>
             <li class = "menubar__item" id="priceFilter" onclick="showPrice()">
                 <?php
-                    if($_SESSION["priceFilter"] == "" || !(isset($_SESSION["priceFilter"]))) {
+                    if(!(isset($_SESSION["priceFilter"])) || ($_SESSION["priceFilter"] == "")) {
                         echo 'Price';
                     } else {
                         echo $_SESSION['priceFilter'];
@@ -186,7 +186,7 @@
         <ul class = "sort">
             <li class = "sort__item">
                 <?php
-                    if($_SESSION["search"] == "" || !(isset($_SESSION["search"]))) {
+                    if(!(isset($_SESSION["search"])) || ($_SESSION["search"] == "")) {
                         echo'<input type = "text" id = "search" name = "search" placeholder = "Search">';
                     } else {
                         echo'<input type = "text" id = "search" name = "search" value = "'.$_SESSION['search'].'">';
