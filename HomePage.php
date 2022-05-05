@@ -55,7 +55,7 @@
                 if (isset($_SESSION["userID"])) {
                     echo "<button type='button' class='header_links'><a href='MyAds.php'>My Ads</a></button>";
                     echo "<button type='button' class='header_links'><a href='Bookings.php'>Bookings</a></button>";
-                    echo "<button type='button' class='header_links'>Messages</button>";
+                    echo "<button type='button' class='header_links'><a href='Messages.php'>Messages</a></button>";
                     echo "<button type='button' class='header_links' id='notifs_list' onclick='show_notifs()'>(notif)</button>";
                     echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'];
                     if($_SESSION['profPic']) {
@@ -73,7 +73,7 @@
         <?php
             if (isset($_SESSION["userID"])) {
                 echo "<div class='notif_panel' id='notifs'>";
-                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5)ORDER BY timeCreated DESC;";
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5) ORDER BY timeCreated DESC;";
                 $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
@@ -92,7 +92,10 @@
                             echo "You have received a booking request from ".$name['firstName']." ".$name['lastName']." for ".$notif['subject'].".";
                         } else if($notif['status'] == 2){
                             # accepted booking
-                            echo "tbd";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo $name['firstName']." ".$name['lastName']." has accepted your booking request for ".$notif['subject'].".";
                         } else if($notif['status'] == 3){
                             # declined booking
                             $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
@@ -101,7 +104,10 @@
                             echo $name['firstName']." ".$name['lastName']." has rejected your booking request for ".$notif['subject'].".";
                         } else if($notif['status'] == 4){
                             # canceled booking
-                            echo "tbd";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo "A booking request from ".$name['firstName']." ".$name['lastName']." for your services for ".$notif['subject']." has been cancelled.";
                         } else if($notif['status'] == 5){
                             # expired booking
                             if($notif['sourceUserID'] == $_SESSION['userID']) {
@@ -260,12 +266,14 @@
                     echo '<form action="php_db_files/createBooking.php" method="POST">';
                     $query = "SELECT * FROM bookings WHERE tuteeID=".$_SESSION['userID']." AND tutorID=".$row["userID"]." AND subject='".$row["subject"]."';";
                     $check = mysqli_query($conn, $query);
+                    $query2 = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." AND sourceUserID=".$row["userID"]." AND subject='".$row["subject"]."' AND status = 2;";
+                    $check2 = mysqli_query($conn, $query2);
                     echo '<input style="display:none" type="number" name="ad" value="'.$row["adID"].'" required>';
                     echo '<div class="book_btn">';
-                    $query2 = "SELECT firstName, lastName FROM userinfo WHERE userID=".$row['userID'].";";
-                    $getName = mysqli_query($conn, $query2);
+                    $query3 = "SELECT firstName, lastName FROM userinfo WHERE userID=".$row['userID'].";";
+                    $getName = mysqli_query($conn, $query3);
                     $name = mysqli_fetch_assoc($getName);
-                    if($bookingExists = mysqli_fetch_assoc($check)) {
+                    if($bookingExists = mysqli_fetch_assoc($check) || $alreadyAccepted = mysqli_fetch_assoc($check2)) {
                         echo '<button class="book disable" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, "'.$row["subject"].'", "'.$name["firstName"].'", "'.$name["lastName"].'")">Book</button>';
                     } else {
                         echo '<button class="book" id="btn_'.$row["adID"].'" onclick="disable_button(this.id, &quot;'.$row["subject"].'&quot;, &quot;'.$name["firstName"].'&quot;, &quot;'.$name["lastName"].'&quot;)">Book</button>';

@@ -26,13 +26,11 @@
                 </button>
             </div>
             <div class="header_navigate">
-                <button class="header_links">
-                    <a href="MyAds.php">My Ads</a>
-                </button>
-                <button class="header_links" class="header_links"><a href='Bookings.php'>Bookings</a></button>
-                <button class="header_links" class="header_links">Messages</button>
-                <button class="header_links" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
-                <button class="header_links" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
+                <button type="button" class="header_links"><a href="MyAds.php">My Ads</a></button>
+                <button type="button" class="header_links"><a href='Bookings.php'>Bookings</a></button>
+                <button type="button" class="header_links"><a href='Messages.php'>Messages</a></button>
+                <button type="button" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
+                <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
                             echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
@@ -44,7 +42,7 @@
             </div>
             <?php
                 echo "<div class='notif_panel' id='notifs'>";
-                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5)ORDER BY timeCreated DESC;";
+                $getNotifs = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." OR (sourceUserID=".$_SESSION['userID']." AND status = 5) ORDER BY timeCreated DESC;";
                 $notifsList = mysqli_query($conn, $getNotifs);
                 for($i = 0; $i < 6; $i++) {
                     if($notif = mysqli_fetch_assoc($notifsList)){
@@ -63,7 +61,10 @@
                             echo "You have received a booking request from ".$name['firstName']." ".$name['lastName']." for ".$notif['subject'].".";
                         } else if($notif['status'] == 2){
                             # accepted booking
-                            echo "tbd";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo $name['firstName']." ".$name['lastName']." has accepted your booking request for ".$notif['subject'].".";
                         } else if($notif['status'] == 3){
                             # declined booking
                             $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
@@ -72,7 +73,10 @@
                             echo $name['firstName']." ".$name['lastName']." has rejected your booking request for ".$notif['subject'].".";
                         } else if($notif['status'] == 4){
                             # canceled booking
-                            echo "tbd";
+                            $getName = "SELECT firstName, lastName FROM userinfo WHERE userID=".$notif['sourceUserID'].";";
+                            $query = mysqli_query($conn, $getName);
+                            $name = mysqli_fetch_assoc($query);
+                            echo "A booking request from ".$name['firstName']." ".$name['lastName']." for your services for ".$notif['subject']." has been cancelled.";
                         } else if($notif['status'] == 5){
                             # expired booking
                             if($notif['sourceUserID'] == $_SESSION['userID']) {
