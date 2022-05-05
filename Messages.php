@@ -114,7 +114,7 @@
         </div>
         <div class="horizontal"></div>
 
-        <!-- This part is for testdb.sql
+        <!-- This part is for testdb.sql and php_db_files/Accept.php
 
             Ideally, database should have two new tables:
             One for the active chats, with columns convoID (auto-increment?), tutorID, tuteeID, subject
