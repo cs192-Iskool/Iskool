@@ -1,0 +1,1 @@
+I think this should just modify the value of $_SESSION["convoID"] then go back to ../Messages.php
