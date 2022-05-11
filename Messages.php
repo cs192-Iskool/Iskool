@@ -16,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="css_files/Messages.css">
         <link rel="stylesheet" href="css_files/header.css">
         <script defer src="js_files/header.js"></script>
+        <script defer src="js_files/sendMessage.js"></script>
     </head>
     <body>
         <div style="z-index: 2; position: relative;" class="top">
@@ -234,9 +235,9 @@
                         echo '</div>';
                         echo '<form action="php_db_files/sendMessages.php?chat='.$result["chatID"].'" method="POST">';
                         echo '<div class="message_box">';
-                        echo '<textarea class="message_input" name="message" placeholder="Type a message...">';
+                        echo '<textarea class="message_input" id="message" name="message" placeholder="Type a message...">';
                         echo '</textarea>';
-                        echo '<button type="submit">Send</button>';
+                        echo '<button id="send_message" type="submit">Send</button>';
                         echo '</div>';
                         echo '</form>';
                     }
