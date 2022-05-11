@@ -19,6 +19,16 @@
   $query = mysqli_query($conn, $acceptNotif);
 
   # Create a chat function for the users
+  $chat = "SELECT * FROM activechats WHERE (tuteeID='".$sUID."' OR tuteeID='".$tUID."') AND (tutorID='".$sUID."' OR tutorID='".$tUID."');";
+  $result = mysqli_query($conn, $chat);
+
+  if(mysqli_num_rows($result)) {
+    header("location: ../Bookings.php");
+    exit();
+  }
+
+  $newChat = "INSERT INTO activechats (tutorID, tuteeID, subject) VALUES ('$tUID', '$sUID', '$subject');";
+  $query = mysqli_query($conn, $newChat);
 
   header("location: ../Bookings.php");
   exit();
