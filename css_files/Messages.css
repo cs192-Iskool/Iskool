@@ -182,12 +182,17 @@ body {
 
 .account_name {
     font-size: xx-large;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.booked_subject {
+    font-size: x-large;
+    margin-top: 15px;
     text-align: center;
 }
 
 .account_rating {
+    margin-top: 30px;
     text-align: center;
 }
