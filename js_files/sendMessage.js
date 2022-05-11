@@ -9,3 +9,8 @@ input.addEventListener("keyup", function(event) {
     document.getElementById("send_message").click();
   }
 });
+
+function click_button(){
+  document.getElementById("see_profile").click();
+}
+
