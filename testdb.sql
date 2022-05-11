@@ -18,6 +18,31 @@ USE `testdb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `activechats`
+--
+
+DROP TABLE IF EXISTS `activechats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `activechats` (
+  `chatID` int(11) NOT NULL AUTO_INCREMENT,
+  `tutorID` int(11) NOT NULL,
+  `tuteeID` int(11) NOT NULL,
+  `subject` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`chatID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `activechats`
+--
+
+LOCK TABLES `activechats` WRITE;
+/*!40000 ALTER TABLE `activechats` DISABLE KEYS */;
+/*!40000 ALTER TABLE `activechats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `adinfo`
 --
 
@@ -89,6 +114,32 @@ CREATE TABLE `notifs` (
   `timeCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `messages` (
+  `chatID` int(11) NOT NULL,
+  `senderID` int(11) NOT NULL,
+  `message` text COLLATE utf8mb4_general_ci NOT NULL,
+  `timeCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `chatID` (`chatID`),
+  CONSTRAINT `chatID` FOREIGN KEY (`chatID`) REFERENCES `activechats` (`chatid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `messages`
+--
+
+LOCK TABLES `messages` WRITE;
+/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `notifs`
