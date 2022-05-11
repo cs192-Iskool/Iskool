@@ -30,5 +30,13 @@
   $newChat = "INSERT INTO activechats (tutorID, tuteeID, subject) VALUES ('$tUID', '$sUID', '$subject');";
   $query = mysqli_query($conn, $newChat);
 
+  $chat = "SELECT activechats.chatID, max(timeCreated) FROM activechats LEFT JOIN messages ON activechats.chatID = messages.chatID WHERE tuteeID='".$_SESSION['userID']."' OR tutorID='".$_SESSION['userID']."' GROUP BY activechats.chatID ORDER BY max(timeCreated) DESC";
+  $query = mysqli_query($conn, $chat);
+  
+  if(mysqli_num_rows($query)) {
+    $result = mysqli_fetch_assoc($query);
+    $_SESSION["chatID"] = $result["chatID"];
+  }
+
   header("location: ../Bookings.php");
   exit();
