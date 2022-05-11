@@ -56,7 +56,7 @@
                     echo "<button type='button' class='header_links'><a href='MyAds.php'>My Ads</a></button>";
                     echo "<button type='button' class='header_links'><a href='Bookings.php'>Bookings</a></button>";
                     echo "<button type='button' class='header_links'><a href='Messages.php'>Messages</a></button>";
-                    echo "<button type='button' class='header_links' id='notifs_list' onclick='show_notifs()'>(notif)</button>";
+                    echo "<img style='width: 36px; height: 40px;' class='header_links' id='notifs_list' src='images/notif.png' onclick='show_notifs()' alt='Notifications'>";
                     echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'];
                     if($_SESSION['profPic']) {
                         echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
@@ -254,7 +254,15 @@
                 echo '</div>';
                 echo '</div>';
                 echo '<div class="ratings">';
-                echo '(This is where the ratings will go)';
+                $avgRating = "SELECT AVG(IF (subject = '".$row['subject']."' AND userID=".$row['userID'].", rating, NULL)) AS avgRating FROM reviews";
+                $query = mysqli_query($conn, $avgRating);
+                $value = mysqli_fetch_assoc($query);
+                $source = round($value['avgRating'], 1);
+                if(strlen(strval($source)) == 1) {
+                    echo "<img style='width: 100px;' src='images/".$source.".0".".png' alt='Rating'>";
+                } else {
+                    echo "<img style='width: 100px;' src='images/".$source.".png' alt='Rating'>";
+                }
                 echo '</div>';
                 echo '<div class="subject">';
                 echo ''.$row["subject"].'';
@@ -268,7 +276,7 @@
                     $check = mysqli_query($conn, $query);
                     $query2 = "SELECT * FROM notifs WHERE targetUserID=".$_SESSION['userID']." AND sourceUserID=".$row["userID"]." AND subject='".$row["subject"]."' AND status = 2;";
                     $check2 = mysqli_query($conn, $query2);
-                    echo '<input style="display:none" type="number" name="ad" value="'.$row["adID"].'" required>';
+                    echo '<input style="display: none;" type="number" name="ad" value="'.$row["adID"].'" required>';
                     echo '<div class="book_btn">';
                     $query3 = "SELECT firstName, lastName FROM userinfo WHERE userID=".$row['userID'].";";
                     $getName = mysqli_query($conn, $query3);
@@ -281,9 +289,13 @@
                     echo '</div>';
                     echo '</form>';
                 }
-                echo '<div class="reviews">';
-                echo '<a href="#">Reviews<a>';
-                echo '</div>';
+                if (!(isset($_SESSION['userID'])) || $row["userID"] != $_SESSION['userID']) {
+                    echo '<div class="reviews">';
+                    echo '<form action="php_db_files/reviewRedirect.php?userID='.$row["userID"].'" method="POST">';
+                    echo '<button class="review_btn">Reviews</button>';
+                    echo '</form>';
+                    echo '</div>';
+                }
                 echo '</div>';
                 echo '</div>';
                 $ctr += 1;

@@ -5,9 +5,6 @@
     if (!isset($_SESSION["userID"])) {
         header("location: Login.html");
     }
-
-    $user = "SELECT * FROM adinfo WHERE userID = '".$_SESSION["userID"]."';";
-    $result = mysqli_query($conn, $user);
 ?>
 
 <!DOCTYPE html>
@@ -15,11 +12,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>My Ads - Iskool</title>
-        <link rel="stylesheet" type="text/css" href="css_files/MyAds.css">
+        <title><?php echo $_SESSION["firstName"] . ' ' . $_SESSION["lastName"]; ?> - Iskool</title>
+        <link rel="stylesheet" type="text/css" href="css_files/ReviewsAndOthers.css">
         <link rel="stylesheet" href="css_files/header.css">
+        <script defer src="js_files/AccountProfile.js"></script>
         <script defer src="js_files/header.js"></script>
-        <script defer src="js_files/MyAds.js"></script>
     </head>
     <body>
         <div class="top">
@@ -32,7 +29,7 @@
                 <button type="button" class="header_links"><a href="MyAds.php">My Ads</a></button>
                 <button type="button" class="header_links"><a href='Bookings.php'>Bookings</a></button>
                 <button type="button" class="header_links"><a href='Messages.php'>Messages</a></button>
-                <img style="width: 36px; height: 40px;" class="header_links" id="notifs_list" src="images/notif.png" onclick="show_notifs()" alt="Notifications">
+                <button type="button" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
                 <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
@@ -117,77 +114,104 @@
             </div>
         </div>
         <div class="horizontal"></div>
-        <div class="whitespace">
-            <h1 class="label">My Ads</h1>
+        <div class="prof_pic">
+            <?php
+                if($_SESSION['profPic']) {
+                    echo "<img class='main_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                } else {
+                    echo "<img class='main_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                }
+            ?>
         </div>
         <div class="horizontal"></div>
         <div class="main">
             <div class="sidebar">
                 <div class="sidebar_navigate">
                     <div>
-                        <a href="MyAds.php">Active Ads</a>
+                        <a href="AccountProfile.php">Profile</a>
                     </div>
                     <div>
-                        <a href="Bookings.php">Awaiting Response</a>
-                    </div>
-                    <div>
-                        <a href="PastBookings.php">Past Bookings</a>
+                        <a href="Reviews.php">Reviews</a>
                     </div>
                 </div>
             </div>
-            <div style="display: flex; flex-wrap: wrap;" class="info_box">
-                <?php
-                    while($row = mysqli_fetch_assoc($result)) {
-                        echo '<div class="ads">';
-                        echo '<img class="options_toggle" id="'.$row["adID"].'" onclick="show_ad_options(this.id)" src="images/options.png" alt="Delete or edit ad.">';
-                        echo '<div class="ad_popup" id="popup_'.$row["adID"].'">
-                                    <div>
-                                        <a href="EditAds.php?ad='.$row["adID"].'">Edit Ad</a>
-                                    </div>
-                                    <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
-                                    <div>
-                                        <button class="open_delete_message" id="delete_'.$row["adID"].'" onclick="show_delete_ad(id)">Delete Ad</button>
-                                    </div>
-                                </div>';
-                        echo '<div class="thumbnail" id="tn_'.$row["adID"].'">';
-                        if($row['image'] === NULL) {
-                            echo '<img style="width: 100%;" src="images/bg.png" alt="Thumbnail for ad."/>';
-                        } else {
-                            echo '<img style="width: 100%;" src="data:image;base64,'.base64_encode($row['image']).'" alt="Thumbnail for ad."/>';
-                        }
-                        echo '</div>';
-                        echo '<div class="sp_horizontal" id="hr_'.$row["adID"].'" style="width: 302px; position: relative; left: -1px;"></div>';
-                        echo '<div class="ad_info" id="ai_'.$row["adID"].'">';
-                        echo '<div class="subject">';
-                        echo ''.$row["subject"].'';
-                        echo '</div>';
-                        echo '<div class="price">';
-                        echo ''.$row["price"].'/hr';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                    }
-                ?>
-                <div class="ads">
-                    <a href="CreateAds.php">
-                        <img class="add_ad_button" src="images/add_ad.png" alt="Create ad button.">
-                    </a>
+            <div class="vertical" style="float: left;"></div>
+            <div class="info_box">
+                <div class="rating">
+                    <div class="user_info">
+                        <?php
+                            $avgRating = "SELECT AVG(IF (subject LIKE '%".$_SESSION['searchReview']."%' AND userID=".$_SESSION['userID'].", rating, NULL)) AS avgRating FROM reviews";
+                            $query = mysqli_query($conn, $avgRating);
+                            $value = mysqli_fetch_assoc($query);
+                            $source = round($value['avgRating'], 1);
+                            if(strlen(strval($source)) == 1) {
+                                echo "<img class='avg_rating' src='images/".$source.".0".".png' alt='Rating'>";
+                            } else {
+                                echo "<img class='avg_rating' src='images/".$source.".png' alt='Rating'>";
+                            }
+                        ?>
+                    </div>
                 </div>
-                <div id="delete_popup">
-                    <div class="message">
-                        <div style="padding-top: 10px;">Are you sure you want to delete this ad?</div>
-                        <div style="padding-bottom: 40px;">This action cannot be undone.</div>
-                        <form action="php_db_files/DeleteAd.php" method="POST">
-                            <input style="display: none;" type="text" name="ad" id="ad" required>
-                            <button type="submit" id="continue_delete" style="float: left;">Yes, delete this ad</button>
+                <div class="review_header" style="padding-top: 0px;">
+                    <?php
+                        $getCount = "SELECT COUNT(*) AS total FROM reviews WHERE (userID=".$_SESSION['userID'].") AND (subject LIKE '%".$_SESSION['searchReview']."%');";
+                        $query = mysqli_query($conn, $getCount);
+                        $count = mysqli_fetch_assoc($query);
+                    ?>
+                    <div class="review_number">
+                        <?php
+                            if($count['total'] == 1) {
+                                echo $count['total']." review";
+                            } else {
+                                echo $count['total']." reviews";
+                            }
+                        ?>
+                    </div>
+                    <div class="review_search">
+                        <form action="php_db_files/reviewSearch.php" method="POST">
+                        Enter a subject: 
+                        <input type = "text" id = "search" name = "search" value = "">
                         </form>
-                        <button id="close_delete_message" style="float: right;">No, don't delete this ad</button>
                     </div>
-                    
                 </div>
-                <div id="delete_overlay"></div>
+                <div class="reviews">
+                    <?php
+                        $getReviews = "SELECT * FROM reviews WHERE (userID = ".$_SESSION['userID'].") AND (subject LIKE '%".$_SESSION['searchReview']."%') ORDER BY timeCreated DESC;";
+                        $query = mysqli_query($conn, $getReviews);
+                        while($review = mysqli_fetch_assoc($query)) {
+                            $getReviewerInfo = "SELECT userID, firstName, profPic FROM userInfo WHERE userID=".$review['reviewerID'].";";
+                            $query2 = mysqli_query($conn, $getReviewerInfo);
+                            $info = mysqli_fetch_assoc($query2);
+                            echo "<div class='actual_review'>";
+                            echo "<div class='reviewer_info'>";
+                            echo "<div class='review_prof_pic_container'>";
+                            if($info['profPic']) {
+                                echo "<img class='review_prof_pic' src='profile_pictures/" . $info['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                            } else {
+                                echo "<img class='review_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                            }
+                            echo "</div>";
+                            echo "<div class='reviewer_name'>".$info['firstName']."</div>";
+                            echo "</div>";
+                            echo "<div class='review_details'>";
+                            echo "<div class='review_rating'>";
+                            echo "<div style='width: 10%; font-size: large; padding-top: 25px;'>Rating:</div>";
+                            # stars
+                            echo "<div style='width: 10%; font-size: large; padding-top: 25px;'>Subject:</div>";
+                            echo "<div style='width: 10%; font-size: large; padding-top: 25px;'>".$review['subject']."</div>";
+                            echo "</div>";
+                            echo "<div class = 'review_message'>".$review['review']."</div>";
+                            echo "</div>";
+                            echo "<div class='review_time_container'>";
+                            echo "<div class='review_time'>".substr($review['timeCreated'], 0, 10)."</div>";
+                            echo "<div class='review_time'>".substr($review['timeCreated'], 11, 5)."</div>";
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                        $_SESSION['searchReview'] = "";
+                    ?>
+                </div>
             </div>
-            
         </div>
         
     </body>

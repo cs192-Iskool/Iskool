@@ -29,7 +29,7 @@
                 <button type="button" class="header_links"><a href="MyAds.php">My Ads</a></button>
                 <button type="button" class="header_links"><a href='Bookings.php'>Bookings</a></button>
                 <button type="button" class="header_links"><a href='Messages.php'>Messages</a></button>
-                <button type="button" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
+                <img style="width: 36px; height: 40px;" class="header_links" id="notifs_list" src="images/notif.png" onclick="show_notifs()" alt="Notifications">
                 <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
@@ -160,6 +160,7 @@
                             }
                             echo '</div>';
                             echo '</div>';
+                            echo '</form>';
                         }
                     ?>
                 </div>
@@ -221,20 +222,32 @@
                     } else {
                         echo "<img class='account_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                     }
+                    echo '<form action="php_db_files/profileRedirect.php?userID='.$user["userID"].'" method="POST">';
                     echo '<div class="account_name">';
+                    echo '<div id="profile_name" style="display: inline-block; cursor: pointer;" onclick="click_button()">';
                     echo $user["firstName"].' '.$user["lastName"];
                     echo '</div>';
+                    echo '<button type="submit" style="display: none;" id="see_profile">Submit</button>';
+                    echo '</div>';
+                    echo '</form>';
                     echo '<div class="booked_subject">';
                     echo 'Booked Subject:'.' '.$subject;
                     echo '</div>';
                     echo '<div class="account_rating">';
-                    echo "(rating)";
+                    $avgRating = "SELECT AVG(IF (userID=".$user['userID'].", rating, NULL)) AS avgRating FROM reviews";
+                    $query = mysqli_query($conn, $avgRating);
+                    $value = mysqli_fetch_assoc($query);
+                    $source = round($value['avgRating'], 1);
+                    if(strlen(strval($source)) == 1) {
+                        echo "<img class='avg_rating' src='images/".$source.".0".".png' alt='Rating'>";
+                    } else {
+                        echo "<img class='avg_rating' src='images/".$source.".png' alt='Rating'>";
+                    }
                     echo '</div>';
                 }
                 echo '</div>';
                 echo '</div>';
             ?>
-            
         </div>
         
     </body>
