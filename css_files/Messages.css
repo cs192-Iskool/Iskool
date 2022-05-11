@@ -161,6 +161,7 @@ body {
     border-radius: 30px;
     padding-left: 18px;
     padding-top: 12px;
+    resize: none;
 }
 
 .account_details {
