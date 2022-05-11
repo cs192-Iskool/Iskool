@@ -20,9 +20,12 @@
 
   # Create a chat function for the users
   $chat = "SELECT * FROM activechats WHERE (tuteeID='".$sUID."' OR tuteeID='".$tUID."') AND (tutorID='".$sUID."' OR tutorID='".$tUID."');";
-  $result = mysqli_query($conn, $chat);
+  $query = mysqli_query($conn, $chat);
 
-  if(mysqli_num_rows($result)) {
+  if(mysqli_num_rows($query)) {
+    $result = mysqli_fetch_assoc($query);
+    $update = "UPDATE activechats SET tutorID = $tUID, tuteeID = $sUID, subject = '$subject' WHERE chatID = '".$result["chatID"]."';";
+    $insert = mysqli_query($conn, $update);
     header("location: ../Bookings.php");
     exit();
   }
