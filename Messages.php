@@ -114,36 +114,13 @@
             </div>
         </div>
         <div class="horizontal"></div>
-
-        <!-- This part is for testdb.sql and php_db_files/Accept.php
-
-            Ideally, database should have two new tables:
-            One for the active chats, with columns convoID (auto-increment?), tutorID, tuteeID, subject
-                - Should be created whenever a tutor accepts a booking (see php_db_files/Accept.php)
-                - Issue is, there would be a separate chat for every accepted booking even if it's the same people talking
-                    - Possible solution, don't create a new chat if it's the same people, but specify in '<div class="account_details">' (see below)
-                      the subjects that the two people are involved in
-
-            Another for the messages, with columns convoID, senderID, message, timeCreated
-
-        -->
-
-        <!-- This part is for php_db_files/Login.php
-
-            $_SESSION["convoID"] should be initialized in php_db_files/Login.php
-            If there aren't any convos associated to/accessible by this session's user, assign some arbitrary default value to $_SESSION["convoID"].
-            Else, assign the convoID of the convo with the most recent message to $_SESSION["convoID"].
-            See line 144 for reference of how the query would look like (I think, I could be wrong, though)
-
-        -->
-
         <div class="main">
             <div class="sidebar">
                 <div class="chat_banner">Chats</div>
                 <div class="chatboxes">
                     <?php
                         # $chats = select query from convos inner joined with messages where session id is either tutor id or tutee id order by timeCreated DESC
-                        $chats = "SELECT activechats.chatID, tutorID, tuteeID, message, max(timeCreated) FROM activechats LEFT JOIN messages ON activechats.chatID = messages.chatID WHERE tuteeID='".$_SESSION['userID']."' OR tutorID='".$_SESSION['userID']."' GROUP BY activechats.chatID ORDER BY max(timeCreated) DESC";
+                        $chats = "SELECT activechats.chatID, tutorID, tuteeID, subject, max(timeCreated) FROM activechats LEFT JOIN messages ON activechats.chatID = messages.chatID WHERE tuteeID='".$_SESSION['userID']."' OR tutorID='".$_SESSION['userID']."' GROUP BY activechats.chatID ORDER BY max(timeCreated) DESC";
                         $query = mysqli_query($conn, $chats);
                         $getUser = "";
                         while($result = mysqli_fetch_assoc($query)) {
@@ -160,18 +137,15 @@
                             $queryLast = mysqli_query($conn, $lastMsg);
                             echo '<div class="chats" onclick="location.href=\'php_db_files/loadMessages.php?chat='.$result["chatID"].'\';">'; # maybe should be a button so we can submit
                             echo '<div class="chat_details">';
-                            # Prof pic
                             if($user['profPic']) {
                                 echo "<img class='chat_prof_pic' src='profile_pictures/". $user['userID'].".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
                             } else {
                                 echo "<img class='chat_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                             }
-                            # Name
                             echo '<div class="chat_text">';
                             echo '<p class="chat_name">';
                             echo $user["firstName"].' '.$user["lastName"];
                             echo '</p>';
-                            # message preview
                             echo '<p class="chat_preview">';
                             if(mysqli_num_rows($queryLast)) {
                                 $msg = mysqli_fetch_assoc($queryLast);
@@ -181,21 +155,16 @@
                             echo '</div>';
                             echo '</div>';
                             echo '<div class="chat_time">';
-                            # time
                             if(mysqli_num_rows($queryLast)) {
                                 echo substr($msg["timeCreated"], 11, 5);
                             }
                             echo '</div>';
                             echo '</div>';
-                            echo '</form>';
                         }
                     ?>
                 </div>
             </div>
             <?php
-                #if $_SESSION["convoID"] is default value, display some placeholder text that says something like 'accept a booking to get started' or whatever -->
-                #else, display the convo specified by $_SESSION["convoID"]
-                #(refer to invision on what to display); feel free to reorganize or change anything
                 echo '<div class="message_display">';
                 if($_SESSION["chatID"] == "") {
                     echo '<div class="no_message">';
@@ -204,6 +173,7 @@
                 } else {
                     $chat = "SELECT * FROM activechats WHERE chatID='".$_SESSION['chatID']."'";
                     $query = mysqli_query($conn, $chat);
+                    $subject = "";
                     while($result = mysqli_fetch_assoc($query)) {
                         if($result["tuteeID"] == $_SESSION["userID"]) {
                             $getUser = "SELECT userID, firstName, lastName, profPic FROM userinfo WHERE userID = '".$result["tutorID"]."';";
@@ -214,10 +184,10 @@
                             $queryUser = mysqli_query($conn, $getUser);
                             $user = mysqli_fetch_assoc($queryUser);
                         }
+                        $subject = $result["subject"];
                         echo '<div class="chat_banner">';
                         echo $user["firstName"].' '.$user["lastName"];
                         echo '</div>';
-                        #echo '<div class="reverse_scroll">';
                         echo '<div class="message_area">';
                         echo '<div>';
                         $msg = "SELECT * FROM messages WHERE chatID='".$_SESSION['chatID']."'";
@@ -244,10 +214,6 @@
                 }
                 echo '</div>';
                 echo '<div class="account_details">';
-                #if $_SESSION["convoID"] is default value, display the div below (for padding purposes, so the whole page is occupied)-->
-                #<!-- else, display the acc details of the convo participant 
-                #(refer to invision on what to display); feel free to reorganize or change anything -->
-                #<!-- also still add this padding just to be sure the whole page is occupied -->
                 echo '<div style="height: 1000px">';
                 if(!($_SESSION["chatID"] == "")) {
                     if($user['profPic']) {
@@ -255,9 +221,12 @@
                     } else {
                         echo "<img class='account_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                     }
-                    echo '<p class="account_name">';
+                    echo '<div class="account_name">';
                     echo $user["firstName"].' '.$user["lastName"];
-                    echo '</p>';
+                    echo '</div>';
+                    echo '<div class="booked_subject">';
+                    echo 'Booked Subject:'.' '.$subject;
+                    echo '</div>';
                     echo '<div class="account_rating">';
                     echo "(rating)";
                     echo '</div>';
