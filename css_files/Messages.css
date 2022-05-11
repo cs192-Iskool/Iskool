@@ -51,17 +51,51 @@ body {
     cursor: pointer;
 }
 
+.chats:hover {
+    background-color: #ddd;
+}
+
 .chat_details {
     width: 80%;
     height: 80px;
+}
+
+.chat_prof_pic {
+    float: left;
+    border-radius: 50%;
+    margin-left: 3px;
+    margin-top: 15px;
+    margin-right: 15px;
+    height: 50px;
+    width: 50px;
+}
+
+.chat_text {
+    margin-top: 18px;
+    margin-left: 15px;
+    width: 200%;
+}
+
+.chat_name {
+    font-size: larger;
+    margin: 0;
+}
+
+.chat_preview {
+    font-size: small;
+    margin-top: 8px;
+    width: 225px;
+    overflow: hidden;
 }
 
 .chat_time {
     display: flex;
     align-items: flex-end;
     width: 20%;
-    height: 80px;
+    height: 45px;
     font-size: small;
+    margin-left: 75px;
+    margin-top: 1px;
 }
 
 .message_display {
@@ -70,8 +104,89 @@ body {
     border-right: 3px solid black;
 }
 
+.no_message {
+    font-size: 25px;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.message_area {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 20px;
+    height: 485px;
+    overflow: auto;
+}
+
+.message_area::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
+}
+
+.message_bubbles {
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 35%;
+    min-height: min-content;
+    overflow-wrap: break-word;
+    padding: 5px;
+}
+
+#sender {
+    background-color: #dd6061;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#receiver {
+    background-color: #ddd;
+}
+
+.message_box {
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+    border-top: 3px solid black;
+    font-size: 25px;
+    position: absolute;
+    bottom: 10%;
+    width: 50%;
+}
+
+.message_input {
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-right: 15px;
+    width: 85%;
+    border-radius: 30px;
+    padding-left: 18px;
+    padding-top: 12px;
+}
+
 .account_details {
     display: flex;
     flex-direction: column;
     width: 25%;
+}
+
+.account_prof_pic {
+    border-radius: 50%;
+    margin-top: 15%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 150px;
+    width: 150px;
+}
+
+.account_name {
+    font-size: xx-large;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}
+
+.account_rating {
+    text-align: center;
 }
