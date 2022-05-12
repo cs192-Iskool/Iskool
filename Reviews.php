@@ -30,7 +30,7 @@
                 <button type="button" class="header_links"><a href="MyAds.php">My Ads</a></button>
                 <button type="button" class="header_links"><a href='Bookings.php'>Bookings</a></button>
                 <button type="button" class="header_links"><a href='Messages.php'>Messages</a></button>
-                <button type="button" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
+                <img style='width: 36px; height: 40px;' class='header_links' id='notifs_list' src='images/notif.png' onclick='show_notifs()' alt='Notifications'>
                 <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
@@ -198,7 +198,7 @@
                             echo "<div class='review_rating'>";
                             echo "<div style='width: 60px; font-size: large; padding-top: 25px;'>Rating:</div>";
                             echo "<img class='review_star' src='images/".$review['rating'].".0".".png' alt='Rating.'>";
-                            echo "<div style='padding-left: 25px; width: 65px; font-size: large; padding-top: 25px;'>Subject:</div>";
+                            echo "<div style='padding-left: 25px; width: 65px; font-size: large; padding-top: 25px; margin-right: 10px;'>Subject:</div>";
                             echo "<div style='width: 300px; font-size: large; padding-top: 25px;'>".$review['subject']."</div>";
                             echo "</div>";
                             echo "<div class = 'review_message'>".$review['review']."</div>";
