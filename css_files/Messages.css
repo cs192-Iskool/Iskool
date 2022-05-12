@@ -168,6 +168,12 @@ body {
     display: flex;
     flex-direction: column;
     width: 25%;
+    overflow: auto;
+}
+
+.account_details::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
 }
 
 .account_prof_pic {
@@ -188,12 +194,11 @@ body {
 
 .booked_subject {
     font-size: x-large;
-    margin-top: 15px;
     text-align: center;
 }
 
 .account_rating {
-    margin-top: 30px;
+    margin-top: 15px;
     text-align: center;
 }
 
