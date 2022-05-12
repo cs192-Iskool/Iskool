@@ -198,10 +198,6 @@ body {
 }
 
 .account_rating {
-    margin-top: 30px;
+    margin-top: 15px;
     text-align: center;
-}
-
-.avg_rating {
-    width: 150px;
 }
