@@ -40,6 +40,7 @@
     <link rel = "stylesheet" href = "css_files/homepageAds.css">
     <link rel = "stylesheet" href = "css_files/homepage.css">
     <link rel = "stylesheet" href = "css_files/header.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <script src = "js_files/homepage.js"></script>
     <script src = "js_files/header.js"></script>
 </head>
@@ -47,7 +48,7 @@
     <div class="top">
         <div class="home">
             <button type="button" class="header_links">
-            <a href="php_db_files/clearInputs.php">Iskool</a>
+            <a href="php_db_files/clearInputs.php">ISKOOL</a>
             </button>
         </div>
         <div class="header_navigate">
@@ -148,7 +149,7 @@
     <div class="horizontal"></div>
 
     <div class = "quirkytagline">
-        <h2 id = "tagline">Quirky Tagline</h2>
+        <h1 id = "tagline">Connect with fellow Iskos.</h1>
     </div>
 
     <div class = "menubar">
@@ -322,7 +323,7 @@
                 $ctr += 1;
             }
             if(mysqli_num_rows($result) == 0 || $ctr == 0) {
-                echo '<div style="font-size: 40px;">No ads have been found.</div>';
+                echo '<div style="font-size: 35px; margin: auto;">No ads have been found.</div>';
             }
             $ctr = 0;
         ?>
