@@ -1,5 +1,5 @@
 * {
-  font-family: "Verdana";
+  font-family: "Poppins", "sans-serif";
 }
 
 body {
@@ -12,7 +12,7 @@ body {
   border: none;
   font-size: 90px;
   position: fixed;
-  top: 65px;
+  top: 60px;
   left: 95px;
 }
 
@@ -86,9 +86,10 @@ select:hover {
   opacity: 0.8;
 }
 
-h5 {
+.sign_in {
   color: #222222;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: bold;
   position: fixed;
   left: 104px;
   margin-top: 5px;

@@ -1,9 +1,19 @@
 * {
-  font-family: "Verdana";
+  font-family: "Poppins", "sans-serif";
 }
 
 body {
   background: linear-gradient(90deg, #94041B 45%, #FFFFFF 0);
+  margin: 0;
+}
+
+.white_block {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 55%;
+  text-align: center;
 }
 
 .home {
@@ -11,9 +21,7 @@ body {
   background-color: #FFFFFF;
   border: none;
   font-size: 90px;
-  position: fixed;
-  top: 140px;
-  left: 960px;
+  margin-top: 15%;
 }
 
 .home a {
@@ -22,9 +30,11 @@ body {
 }
 
 .login {
-  position: fixed;
-  top: 310px;
-  left: 1005px;
+  text-align: center;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: min-content;
 }
 
 input {
@@ -32,7 +42,7 @@ input {
   background-color: #FCFCFC;
   border-radius: 5px;
   border: 2px solid #CECECE;
-  width: 250px;
+  width: 275px;
   height: 20px;
   padding: 5px;
   margin: 4px;
@@ -43,6 +53,7 @@ input:hover {
 }
 
 .loginButton {
+  float: right;
   cursor: pointer;
   color: #FFFFFF;
   background-color: #0C96E6;
@@ -50,21 +61,19 @@ input:hover {
   border: 2px solid #0C96E6;
   width: 75px;
   padding: 5px;
-  position: fixed;
-  top: 412px;
-  left: 1197px;
+  margin-top: 20px;
+  margin-right: 2px;
 }
 
 .loginButton:hover {
   opacity: 0.8;
 }
 
-h5 {
+.sign_up {
   color: #222222;
-  font-size: 12px;
-  position: fixed;
-  top: 600px;
-  left: 1003px;
+  font-size: 13px;
+  font-weight: bold;
+  margin: auto;
 }
 
 span.site {
