@@ -29,5 +29,13 @@
   $insertReview = mysqli_query($conn, $createReview);
   # ^ also currently can't deal with newline characters. saves everything in one line instead.
 
+  $avgRating = "SELECT AVG(IF (userID=".$userID." AND subject='".$subject."', rating, NULL)) AS avgRating FROM reviews";
+  $query = mysqli_query($conn, $avgRating);
+  $result = mysqli_fetch_assoc($query);
+  $value = round($result['avgRating'], 1);
+  
+  $updateRating = "UPDATE adinfo SET avgRating = ".$value." WHERE subject = '".$subject."' AND userID = ".$userID.";";
+  $query = mysqli_query($conn, $updateRating);
+
   header("location: ../OtherReviews.php");
   exit();

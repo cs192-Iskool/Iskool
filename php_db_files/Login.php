@@ -29,6 +29,7 @@
     $_SESSION["profPic"] = $id["profPic"];
     $_SESSION["search"] = "";
     $_SESSION["filters"] = 0;
+    $_SESSION["sort"] = "Newest";
     $_SESSION["campusFilter"] = "";
     $_SESSION["priceFilter"] = "";
     $_SESSION["minPriceFilter"] = "";
