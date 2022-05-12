@@ -79,3 +79,7 @@ input:hover {
 span.site {
   color: #94051C;
 }
+
+.sign_up a {
+  color: black;
+}
