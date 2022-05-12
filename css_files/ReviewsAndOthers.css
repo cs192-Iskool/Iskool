@@ -1,3 +1,7 @@
+*{
+    font-family: "Poppins", "sans-serif";
+}
+
 body {
     margin: 0px;
     border: 0px;
@@ -221,7 +225,8 @@ input[type="file"] {
 }
 
 .review_star {
-    margin-top: 22px;
+    margin-top: 28px;
+    margin-left: 10px;
     width: 100px;
 }
 

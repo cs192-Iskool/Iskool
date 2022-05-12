@@ -15,6 +15,7 @@
         <title><?php echo $_SESSION["firstName"] . ' ' . $_SESSION["lastName"]; ?> - Iskool</title>
         <link rel="stylesheet" type="text/css" href="css_files/ReviewsAndOthers.css">
         <link rel="stylesheet" href="css_files/header.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
         <script defer src="js_files/AccountProfile.js"></script>
         <script defer src="js_files/header.js"></script>
     </head>
@@ -22,7 +23,7 @@
         <div class="top">
             <div class="home">
                 <button class="header_links">
-                <a href="php_db_files/clearInputs.php">Iskool</a>
+                <a href="php_db_files/clearInputs.php">ISKOOL</a>
                 </button>
             </div>
             <div class="header_navigate">
