@@ -83,6 +83,7 @@ CREATE TABLE `adinfo` (
   `adID` int NOT NULL AUTO_INCREMENT,
   `subject` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
   `price` int NOT NULL,
+  `avgRating` decimal(2,1) NOT NULL,
   `image` blob,
   `timeCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`adID`),

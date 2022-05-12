@@ -15,6 +15,7 @@
         <title><?php echo $_SESSION["firstName"] . ' ' . $_SESSION["lastName"]; ?> - Iskool</title>
         <link rel="stylesheet" type="text/css" href="css_files/ReviewsAndOthers.css">
         <link rel="stylesheet" href="css_files/header.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
         <script defer src="js_files/AccountProfile.js"></script>
         <script defer src="js_files/header.js"></script>
     </head>
@@ -22,20 +23,20 @@
         <div class="top">
             <div class="home">
                 <button class="header_links">
-                <a href="php_db_files/clearInputs.php">Iskool</a>
+                <a href="php_db_files/clearInputs.php">ISKOOL</a>
                 </button>
             </div>
             <div class="header_navigate">
                 <button type="button" class="header_links"><a href="MyAds.php">My Ads</a></button>
                 <button type="button" class="header_links"><a href='Bookings.php'>Bookings</a></button>
                 <button type="button" class="header_links"><a href='Messages.php'>Messages</a></button>
-                <button type="button" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
+                <img style='width: 36px; height: 40px;' class='header_links' id='notifs_list' src='images/notif.png' onclick='show_notifs()' alt='Notifications'>
                 <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
-                            echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                            echo "<img class='corner_prof_pic' id='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
                         } else {
-                            echo "<img class='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                            echo "<img class='corner_prof_pic' id='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                         }
                     ?>
                 </button>
@@ -105,11 +106,11 @@
             ?>
             <div class="dropdown_popup" id="dropdown_elements">
                 <div>
-                    <a href="AccountProfile.php">Profile</a>
+                    <a style="color: black;" href="AccountProfile.php">Profile</a>
                 </div>
                 <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
                 <div>
-                    <a href="php_db_files/Logout.php">Log Out</a>
+                    <a style="color: black;" href="php_db_files/Logout.php">Log Out</a>
                 </div>
             </div>
         </div>
@@ -195,10 +196,10 @@
                             echo "</div>";
                             echo "<div class='review_details'>";
                             echo "<div class='review_rating'>";
-                            echo "<div style='width: 10%; font-size: large; padding-top: 25px;'>Rating:</div>";
-                            # stars
-                            echo "<div style='width: 10%; font-size: large; padding-top: 25px;'>Subject:</div>";
-                            echo "<div style='width: 10%; font-size: large; padding-top: 25px;'>".$review['subject']."</div>";
+                            echo "<div style='width: 60px; font-size: large; padding-top: 25px;'>Rating:</div>";
+                            echo "<img class='review_star' src='images/".$review['rating'].".0".".png' alt='Rating.'>";
+                            echo "<div style='padding-left: 25px; width: 65px; font-size: large; padding-top: 25px; margin-right: 10px;'>Subject:</div>";
+                            echo "<div style='width: 300px; font-size: large; padding-top: 25px;'>".$review['subject']."</div>";
                             echo "</div>";
                             echo "<div class = 'review_message'>".$review['review']."</div>";
                             echo "</div>";

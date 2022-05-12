@@ -16,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="css_files/ReviewsAndOthers.css">
         <link rel="stylesheet" type="text/css" href="css_files/homepageAds.css">
         <link rel="stylesheet" href="css_files/header.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
         <script src = "js_files/homepage.js"></script>
         <script defer src="js_files/header.js"></script>
     </head>
@@ -23,7 +24,7 @@
         <div class="top">
             <div class="home">
                 <button class="header_links">
-                <a href="php_db_files/clearInputs.php">Iskool</a>
+                <a href="php_db_files/clearInputs.php">ISKOOL</a>
                 </button>
             </div>
             <div class="header_navigate">
@@ -35,9 +36,9 @@
                         echo "<img style='width: 36px; height: 40px;' class='header_links' id='notifs_list' src='images/notif.png' onclick='show_notifs()' alt='Notifications'>";
                         echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'];
                         if($_SESSION['profPic']) {
-                            echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                            echo "<img class='corner_prof_pic' id='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
                         } else {
-                            echo "<img class='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                            echo "<img class='corner_prof_pic' id='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                         }
                         echo "</button>";
                     } else {
@@ -113,11 +114,11 @@
             ?>
             <div class="dropdown_popup" id="dropdown_elements">
                 <div>
-                    <a href="AccountProfile.php">Profile</a>
+                    <a style="color: black;" href="AccountProfile.php">Profile</a>
                 </div>
                 <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
                 <div>
-                    <a href="php_db_files/Logout.php">Log Out</a>
+                    <a style="color: black;" href="php_db_files/Logout.php">Log Out</a>
                 </div>
             </div>
         </div>

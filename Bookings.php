@@ -18,13 +18,14 @@
         <title>Bookings - Iskool</title>
         <link rel="stylesheet" type="text/css" href="css_files/Bookings.css">
         <link rel="stylesheet" href="css_files/header.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
         <script defer src="js_files/header.js"></script>
     </head>
     <body>
         <div class="top">
             <div class="home">
                 <button class="header_links">
-                <a href="php_db_files/clearInputs.php">Iskool</a>
+                <a href="php_db_files/clearInputs.php">ISKOOL</a>
                 </button>
             </div>
             <div class="header_navigate">
@@ -35,9 +36,9 @@
                 <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
-                            echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                            echo "<img class='corner_prof_pic' id='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
                         } else {
-                            echo "<img class='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                            echo "<img class='corner_prof_pic' id='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                         }
                     ?>
                 </button>
@@ -107,11 +108,11 @@
             ?>
             <div class="dropdown_popup" id="dropdown_elements">
                 <div>
-                    <a href="AccountProfile.php">Profile</a>
+                    <a style="color: black;" href="AccountProfile.php">Profile</a>
                 </div>
                 <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
                 <div>
-                    <a href="php_db_files/Logout.php">Log Out</a>
+                    <a style="color: black;" href="php_db_files/Logout.php">Log Out</a>
                 </div>
             </div>
         </div>
@@ -138,7 +139,7 @@
                 <?php
                     $book = mysqli_fetch_assoc($result);
                     if(!($book)) {
-                        echo '<div style="font-size: 40px;">You have no active bookings.</div>';
+                        echo '<div style="font-size: 30px; margin-left: auto; margin-right: auto;">You have no active bookings.</div>';
                     } else {
                         while($book) {
                             echo '<div class="all_info">';

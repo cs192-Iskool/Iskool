@@ -2,6 +2,10 @@ function sortbyClick(){
     document.getElementById("dropdownContainer").classList.toggle("show");
 }
 
+function submitSort(sortOption){
+  document.getElementById(sortOption).click();
+}
+
 function disable_button(id, subject, fn, ln){
   document.getElementById(id).classList.add("disable");
   alert(`You have booked a service for ${subject} from ${fn} ${ln}.\nSee your Bookings for the status of this request.`);
