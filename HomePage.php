@@ -59,9 +59,9 @@
                     echo "<img style='width: 36px; height: 40px;' class='header_links' id='notifs_list' src='images/notif.png' onclick='show_notifs()' alt='Notifications'>";
                     echo "<button type='button' class='header_links' id='dropdown' onclick='show_dropdown()'> " . $_SESSION['firstName'];
                     if($_SESSION['profPic']) {
-                        echo "<img class='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
+                        echo "<img class='corner_prof_pic' id='corner_prof_pic' src='profile_pictures/" . $_SESSION['userID'] . ".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
                     } else {
-                        echo "<img class='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
+                        echo "<img class='corner_prof_pic' id='corner_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                     }
                     echo "</button>";
                 } else {
@@ -137,11 +137,11 @@
         ?>
         <div class="dropdown_popup" id="dropdown_elements">
             <div>
-                <a href="AccountProfile.php">Profile</a>
+                <a style="color: black;" href="AccountProfile.php">Profile</a>
             </div>
             <div style="margin-top: 10px; margin-bottom: 10px;"class="horizontal"></div>
             <div>
-                <a href="php_db_files/Logout.php">Log Out</a>
+                <a style="color: black;" href="php_db_files/Logout.php">Log Out</a>
             </div>
         </div>
     </div>
@@ -188,9 +188,9 @@
                 </div>
             </li>
         </ul>
-        <form id="submit_search" class = "sort" action="php_db_files/searchAds.php" method="POST">
         <ul class = "sort">
             <li class = "sort__item">
+                <form id="submit_search" class = "sort" action="php_db_files/searchAds.php" method="POST">
                 <?php
                     if(!(isset($_SESSION["search"])) || ($_SESSION["search"] == "")) {
                         echo'<input type = "text" id = "search" name = "search" placeholder = "Search">';
@@ -198,29 +198,54 @@
                         echo'<input type = "text" id = "search" name = "search" value = "'.$_SESSION['search'].'">';
                     }
                 ?>
+                <button type="submit" style="display: none;" id="search_ad">Submit</button>
+                </form>
             </li>
-            <button type="submit" style="display: none;" id="search_ad">Submit</button>
             <li class = "sort__item">
                 <div class = "dropdown">
                     Sort By:
                 </div>
-                <div class = "dropbtn" onclick="sortbyClick()">Newest</div>
+                <div class = "dropbtn" onclick="sortbyClick()">
+                    <?php
+                        if(isset($_SESSION['sort'])) {
+                            echo $_SESSION['sort'];
+                        } else {
+                            echo 'Newest';
+                        }
+                    ?>
+                </div>
                 <div class = "dropdown-content" id = "dropdownContainer">
-                    <a href = "#">Newest</a>
-                    <a href = "#">Lowest Price</a>
-                    <a href = "#">Highest Rating</a>
+                    <form action="php_db_files/sortAds.php?sort=Newest" method="POST">
+                    <div onclick="submitSort('Newest')">Newest</div>
+                    <button type="submit" id="Newest" style="display: none;"></button>
+                    </form>
+                    <form action="php_db_files/sortAds.php?sort=Lowest Price" method="POST">
+                    <div onclick="submitSort('Lowest_Price')">Lowest Price</div>
+                    <button type="submit" id="Lowest_Price" style="display: none;"></button>
+                    </form>
+                    <form action="php_db_files/sortAds.php?sort=Highest Rating" method="POST">
+                    <div onclick="submitSort('Highest_Rating')">Highest Rating</div>
+                    <button type="submit" id="Highest_Rating" style="display: none;"></button>
+                    </form>
                 </div>
             </li>
         </ul>
-        </form>
     </div>
     <div style="display: flex; flex-wrap: wrap;" class="ads_display">
         <?php
-            if (!(isset($_SESSION['userID'])) && !(isset($_SESSION['search'])) && !(isset($_SESSION['filters']))) {
+            if (!(isset($_SESSION['userID'])) && !(isset($_SESSION['search'])) && !(isset($_SESSION['filters'])) && !(isset($_SESSION['sort']))) {
                 $_SESSION['search'] = "";
                 $_SESSION['filters'] = 0;
+                $_SESSION['sort'] = "Newest";
             }
-            $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
+            if($_SESSION['sort'] == "Newest"){
+                $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY timeCreated DESC;";
+            } else if($_SESSION['sort'] == "Lowest Price") {
+                $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY price;";
+            } else {
+                $user = "SELECT * FROM adinfo INNER JOIN userinfo USING (userID) WHERE CONCAT(firstName, ' ', lastName) LIKE '%".$_SESSION['search']."%' OR campus LIKE '%".$_SESSION['search']."%' OR course LIKE '%".$_SESSION['search']."%' OR subject LIKE '%".$_SESSION['search']."%' ORDER BY avgRating DESC;";
+            }
+            
             $result = mysqli_query($conn, $user);
             $ctr = 0;
             while($row = mysqli_fetch_assoc($result)) {
@@ -254,14 +279,10 @@
                 echo '</div>';
                 echo '</div>';
                 echo '<div class="ratings">';
-                $avgRating = "SELECT AVG(IF (subject = '".$row['subject']."' AND userID=".$row['userID'].", rating, NULL)) AS avgRating FROM reviews";
-                $query = mysqli_query($conn, $avgRating);
-                $value = mysqli_fetch_assoc($query);
-                $source = round($value['avgRating'], 1);
-                if(strlen(strval($source)) == 1) {
-                    echo "<img style='width: 100px;' src='images/".$source.".0".".png' alt='Rating'>";
+                if(strlen(strval($row['avgRating'])) == 1) {
+                    echo "<img style='width: 100px;' src='images/".$row['avgRating'].".0".".png' alt='Rating'>";
                 } else {
-                    echo "<img style='width: 100px;' src='images/".$source.".png' alt='Rating'>";
+                    echo "<img style='width: 100px;' src='images/".$row['avgRating'].".png' alt='Rating'>";
                 }
                 echo '</div>';
                 echo '<div class="subject">';
@@ -308,8 +329,7 @@
     </div>
     <div id="pic_overlay"></div>
     <img id="pic">
-
-    
+    <?php $_SESSION["sort"] = 'Newest'; ?>
 </body>
 </script>
 </html>
