@@ -29,7 +29,7 @@
                 <button type="button" class="header_links"><a href="MyAds.php">My Ads</a></button>
                 <button type="button" class="header_links"><a href='Bookings.php'>Bookings</a></button>
                 <button type="button" class="header_links"><a href='Messages.php'>Messages</a></button>
-                <button type="button" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
+                <img style="width: 36px; height: 40px;" class="header_links" id="notifs_list" src="images/notif.png" onclick="show_notifs()" alt="Notifications">
                 <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
@@ -131,7 +131,7 @@
                         <a href="AccountProfile.php">Profile</a>
                     </div>
                     <div>
-                        <a href="#">Reviews</a>
+                        <a href="Reviews.php">Reviews</a>
                     </div>
                 </div>
             </div>

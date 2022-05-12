@@ -201,3 +201,7 @@ body {
     margin-top: 15px;
     text-align: center;
 }
+
+.avg_rating {
+    width: 150px;
+}

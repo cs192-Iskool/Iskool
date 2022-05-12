@@ -18,6 +18,35 @@ USE `testdb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `reviews`
+--
+
+DROP TABLE IF EXISTS `reviews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `reviews` (
+  `reviewID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `reviewerID` int(11) NOT NULL,
+  `subject` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
+  `review` varchar(300) COLLATE utf8mb4_general_ci NOT NULL,
+  `rating` int(11) NOT NULL,
+  `timeCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`reviewID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reviews`
+--
+
+LOCK TABLES `reviews` WRITE;
+/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
 -- Table structure for table `activechats`
 --
 
@@ -106,14 +135,25 @@ DROP TABLE IF EXISTS `notifs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notifs` (
+  `notifID` int NOT NULL AUTO_INCREMENT,
   `targetUserID` int NOT NULL,
   `bookingID` int NOT NULL,
   `status` int NOT NULL,
   `subject` varchar(45) COLLATE utf8mb4_general_ci NOT NULL,
   `sourceUserID` int NOT NULL,
-  `timeCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `timeCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`notifID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notifs`
+--
+
+LOCK TABLES `notifs` WRITE;
+/*!40000 ALTER TABLE `notifs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifs` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `messages`
@@ -139,15 +179,6 @@ CREATE TABLE `messages` (
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `notifs`
---
-
-LOCK TABLES `notifs` WRITE;
-/*!40000 ALTER TABLE `notifs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notifs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

@@ -66,8 +66,7 @@
 
 .ratings {
     width: 100%;
-    padding-top: 5px;
-    font-size: small;
+    height: 15px;
 }
 
 .subject {
@@ -101,10 +100,18 @@
 }
 
 .reviews {
-    padding-top: 15px;
+    padding-top: 13px;
     width: 135px;
     text-align: right;
     float: right;
+}
+
+.review_btn {
+    padding: 0px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-size: medium;
 }
 
 #pic_overlay {
