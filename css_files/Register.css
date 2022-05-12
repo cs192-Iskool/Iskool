@@ -94,3 +94,7 @@ select:hover {
   left: 104px;
   margin-top: 5px;
 }
+
+.sign_in a {
+  color: black;
+}
