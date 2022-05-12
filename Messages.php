@@ -29,7 +29,7 @@
                 <button type="button" class="header_links"><a href="MyAds.php">My Ads</a></button>
                 <button type="button" class="header_links"><a href='Bookings.php'>Bookings</a></button>
                 <button type="button" class="header_links"><a href='Messages.php'>Messages</a></button>
-                <button type="button" class="header_links" id="notifs_list" onclick="show_notifs()">(notif)</button>
+                <img style="width: 36px; height: 40px;" class="header_links" id="notifs_list" src="images/notif.png" onclick="show_notifs()" alt="Notifications">
                 <button type="button" class="header_links" id="dropdown" onclick="show_dropdown()"><?php echo $_SESSION["firstName"]; ?>
                     <?php
                         if($_SESSION['profPic']) {
@@ -119,8 +119,7 @@
                 <div class="chat_banner">Chats</div>
                 <div class="chatboxes">
                     <?php
-                        # $chats = select query from convos inner joined with messages where session id is either tutor id or tutee id order by timeCreated DESC
-                        $chats = "SELECT activechats.chatID, tutorID, tuteeID, subject, max(timeCreated) FROM activechats LEFT JOIN messages ON activechats.chatID = messages.chatID WHERE tuteeID='".$_SESSION['userID']."' OR tutorID='".$_SESSION['userID']."' GROUP BY activechats.chatID ORDER BY max(timeCreated) DESC";
+                        $chats = "SELECT activechats.chatID, tutorID, tuteeID, max(timeCreated) FROM activechats LEFT JOIN messages ON activechats.chatID = messages.chatID WHERE tuteeID='".$_SESSION['userID']."' OR tutorID='".$_SESSION['userID']."' GROUP BY activechats.chatID ORDER BY max(timeCreated) DESC";
                         $query = mysqli_query($conn, $chats);
                         $getUser = "";
                         while($result = mysqli_fetch_assoc($query)) {
@@ -135,7 +134,7 @@
                             }
                             $lastMsg = "SELECT * FROM messages WHERE chatID='".$result['chatID']."' ORDER BY timeCreated DESC LIMIT 1";
                             $queryLast = mysqli_query($conn, $lastMsg);
-                            echo '<div class="chats" onclick="location.href=\'php_db_files/loadMessages.php?chat='.$result["chatID"].'\';">'; # maybe should be a button so we can submit
+                            echo '<div class="chats" onclick="location.href=\'php_db_files/loadMessages.php?chat='.$result["chatID"].'\';">';
                             echo '<div class="chat_details">';
                             if($user['profPic']) {
                                 echo "<img class='chat_prof_pic' src='profile_pictures/". $user['userID'].".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
@@ -160,6 +159,7 @@
                             }
                             echo '</div>';
                             echo '</div>';
+                            echo '</form>';
                         }
                     ?>
                 </div>
@@ -173,7 +173,6 @@
                 } else {
                     $chat = "SELECT * FROM activechats WHERE chatID='".$_SESSION['chatID']."'";
                     $query = mysqli_query($conn, $chat);
-                    $subject = "";
                     while($result = mysqli_fetch_assoc($query)) {
                         if($result["tuteeID"] == $_SESSION["userID"]) {
                             $getUser = "SELECT userID, firstName, lastName, profPic FROM userinfo WHERE userID = '".$result["tutorID"]."';";
@@ -184,7 +183,6 @@
                             $queryUser = mysqli_query($conn, $getUser);
                             $user = mysqli_fetch_assoc($queryUser);
                         }
-                        $subject = $result["subject"];
                         echo '<div class="chat_banner">';
                         echo $user["firstName"].' '.$user["lastName"];
                         echo '</div>';
@@ -214,27 +212,46 @@
                 }
                 echo '</div>';
                 echo '<div class="account_details">';
-                echo '<div style="height: 1000px">';
+                echo '<div style="min-height: 1000px;">';
                 if(!($_SESSION["chatID"] == "")) {
                     if($user['profPic']) {
                         echo "<img class='account_prof_pic' src='profile_pictures/".$user['userID'].".jpg?'" .  mt_rand() . " alt='Your current profile picture.'>";
                     } else {
                         echo "<img class='account_prof_pic' src='images/profpic.jpg' alt='Your current profile picture.'>";
                     }
+                    echo '<form action="php_db_files/profileRedirect.php?userID='.$user["userID"].'" method="POST">';
                     echo '<div class="account_name">';
+                    echo '<div id="profile_name" style="display: inline-block; cursor: pointer;" onclick="click_button()">';
                     echo $user["firstName"].' '.$user["lastName"];
                     echo '</div>';
-                    echo '<div class="booked_subject">';
-                    echo 'Booked Subject:'.' '.$subject;
+                    echo '<button type="submit" style="display: none;" id="see_profile">Submit</button>';
                     echo '</div>';
+                    echo '</form>';
                     echo '<div class="account_rating">';
-                    echo "(rating)";
+                    $avgRating = "SELECT AVG(IF (userID=".$user['userID'].", rating, NULL)) AS avgRating FROM reviews";
+                    $query = mysqli_query($conn, $avgRating);
+                    $value = mysqli_fetch_assoc($query);
+                    $source = round($value['avgRating'], 1);
+                    if(strlen(strval($source)) == 1) {
+                        echo "<img class='avg_rating' src='images/".$source.".0".".png' alt='Rating'>";
+                    } else {
+                        echo "<img class='avg_rating' src='images/".$source.".png' alt='Rating'>";
+                    }
+                    echo '</div>';
+                    echo '<div class="booked_subject">';
+                    echo 'Booked Subjects:';
+                    echo '<br>';
+                    $subjects = "SELECT subject FROM notifs WHERE (sourceUserID=".$_SESSION['userID']." OR sourceUserID=".$user['userID'].") AND (targetUserID=".$_SESSION['userID']." OR targetUserID=".$user['userID'].") AND status=2;";
+                    $query = mysqli_query($conn, $subjects);
+                    while($result = mysqli_fetch_assoc($query)) {
+                        echo $result["subject"];
+                        echo '<br>';
+                    }
                     echo '</div>';
                 }
                 echo '</div>';
                 echo '</div>';
             ?>
-            
         </div>
         
     </body>
