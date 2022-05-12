@@ -15,8 +15,10 @@ window.onclick = function(event){
     }
     if(event.target.id != "notifs" && event.target.id != "notifs_list"){
         var notif_popup = document.getElementById("notifs");
-        if(notif_popup.classList.contains("disp")){
-            notif_popup.classList.remove("disp");
+        if(!notif_popup){} else {
+            if(notif_popup.classList.contains("disp")){
+                notif_popup.classList.remove("disp");
+            }
         }
     }
     if(!event.target.matches(".dropbtn")){
