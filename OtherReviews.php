@@ -279,7 +279,7 @@
                             echo "<div style='width: 60px; font-size: large; padding-top: 25px;'>Rating:</div>";
                             echo "<img class='review_star' src='images/".$review['rating'].".0".".png' alt='Rating.'>";
                             echo "<div style='padding-left: 25px; width: 65px; font-size: large; padding-top: 25px; margin-right: 10px;'>Subject:</div>";
-                            echo "<div style='width: 10%; font-size: large; padding-top: 25px;'>".$review['subject']."</div>";
+                            echo "<div style='width: 300px; font-size: large; padding-top: 25px;'>".$review['subject']."</div>";
                             echo "</div>";
                             echo "<div class = 'review_message'>".$review['review']."</div>";
                             echo "</div>";
