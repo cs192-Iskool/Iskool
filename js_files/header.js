@@ -7,7 +7,7 @@ function show_notifs(){
 }
 
 window.onclick = function(event){
-    if(event.target.id != "dropdown_elements" && event.target.id != "dropdown"){
+    if(event.target.id != "dropdown_elements" && event.target.id != "dropdown" && event.target.id != "corner_prof_pic"){
         var dropdown_popup = document.getElementById("dropdown_elements");
         if(dropdown_popup.classList.contains("disp")){
             dropdown_popup.classList.remove("disp");
