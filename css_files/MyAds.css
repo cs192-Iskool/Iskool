@@ -108,6 +108,14 @@ td {
     color: black;
 }
 
+.ad_popup div:hover {
+    background-color: #aaaaaa;
+}
+
+.ad_popup button:hover {
+    background-color: #aaaaaa;
+}
+
 .ad_popup button {
     font-size: medium;
 }
@@ -141,7 +149,7 @@ td {
 }
 
 .adjust {
-    top: -90px;
+    top: -101px;
 }
 .subject {
     padding-left: 15px;

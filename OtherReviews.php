@@ -224,13 +224,13 @@
                                     echo "</div>";
                                     echo "<div class='review_details'>";
                                     echo "<div class='review_rating'>";
-                                    echo "<div style='width: 60px; font-size: large; padding-top: 25px;'>Rating:</div>";
+                                    echo "<div style='width: 60px; padding-top: 25px;'>Rating:</div>";
                                     echo "<img class='star' id='star1' src='images/emptyStar.png' onclick='choose_rating(this.id)' alt='Rating.'>";
                                     echo "<img class='star' id='star2' src='images/emptyStar.png' onclick='choose_rating(this.id)' alt='Rating.'>";
                                     echo "<img class='star' id='star3' src='images/emptyStar.png' onclick='choose_rating(this.id)' alt='Rating.'>";
                                     echo "<img class='star' id='star4' src='images/emptyStar.png' onclick='choose_rating(this.id)' alt='Rating.'>";
                                     echo "<img class='star' id='star5' src='images/emptyStar.png' onclick='choose_rating(this.id)' alt='Rating.'>";
-                                    echo "<div style='padding-left: 25px; width: 65px; font-size: large; padding-top: 25px;'>Subject:</div>";
+                                    echo "<div style='padding-left: 25px; width: 70px; padding-top: 25px;'>Subject:</div>";
                                     echo "<input style='display: none;' id='submit_rating' type = 'number' name = 'rating' value=0>";
                                     echo "<select class='select_subject' name='subject' required>";
                                     $checkReview = "SELECT * FROM reviews WHERE subject='".$result['subject']."' AND userID=".$result['sourceUserID']." AND reviewerID=".$result['targetUserID'].";";
